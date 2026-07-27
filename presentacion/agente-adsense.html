@@ -1,0 +1,540 @@
+<title>AdSense Publisher Agent — Presentación</title>
+<style>
+  :root {
+    --bg: #EDEFF3; --panel: #FFFFFF; --panel-2: #F5F7FA; --panel-3: #EEF1F6;
+    --ink: #161922; --muted: #626B7A; --faint: #8B94A3; --line: #DCE1EA;
+    --accent: #A9761A; --accent-fill: #E0A73C; --accent-soft: #F6ECD6;
+    --teal: #1C8576; --teal-soft: #DBEFEB;
+    --warn: #B9781B; --crit: #C24E39; --crit-soft: #F6E1DB;
+    --shadow: 0 1px 2px rgba(20,25,35,.04), 0 12px 32px -12px rgba(20,25,35,.14);
+    --mono: ui-monospace, "SF Mono", "JetBrains Mono", "Cascadia Code", Menlo, monospace;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0D0F16; --panel: #161922; --panel-2: #1D212C; --panel-3: #232834;
+      --ink: #E9EBF1; --muted: #97A0AF; --faint: #6B7484; --line: #272D3A;
+      --accent: #E8B457; --accent-fill: #E8B457; --accent-soft: #2A2517;
+      --teal: #3CB6A4; --teal-soft: #16302C;
+      --warn: #E0A13C; --crit: #E36C55; --crit-soft: #33201B;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 18px 40px -14px rgba(0,0,0,.55);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #EDEFF3; --panel: #FFFFFF; --panel-2: #F5F7FA; --panel-3: #EEF1F6;
+    --ink: #161922; --muted: #626B7A; --faint: #8B94A3; --line: #DCE1EA;
+    --accent: #A9761A; --accent-fill: #E0A73C; --accent-soft: #F6ECD6;
+    --teal: #1C8576; --teal-soft: #DBEFEB;
+    --warn: #B9781B; --crit: #C24E39; --crit-soft: #F6E1DB;
+    --shadow: 0 1px 2px rgba(20,25,35,.04), 0 12px 32px -12px rgba(20,25,35,.14);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0D0F16; --panel: #161922; --panel-2: #1D212C; --panel-3: #232834;
+    --ink: #E9EBF1; --muted: #97A0AF; --faint: #6B7484; --line: #272D3A;
+    --accent: #E8B457; --accent-fill: #E8B457; --accent-soft: #2A2517;
+    --teal: #3CB6A4; --teal-soft: #16302C;
+    --warn: #E0A13C; --crit: #E36C55; --crit-soft: #33201B;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 18px 40px -14px rgba(0,0,0,.55);
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; background: var(--bg); color: var(--ink);
+    font-family: var(--sans); line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  .deck { scroll-snap-type: y proximity; }
+  .slide {
+    min-height: 100svh; scroll-snap-align: start;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: clamp(28px, 6vw, 96px); position: relative;
+    border-bottom: 1px solid var(--line);
+  }
+  .slide-inner { width: 100%; max-width: 1120px; margin: 0 auto; }
+
+  .eyebrow {
+    font-family: var(--mono); font-size: 12px; letter-spacing: .22em;
+    text-transform: uppercase; color: var(--accent); font-weight: 600;
+    display: flex; align-items: center; gap: 10px; margin: 0 0 20px;
+  }
+  .eyebrow::before {
+    content: ""; width: 26px; height: 1px; background: var(--accent-fill); opacity: .7;
+  }
+  h1 { font-size: clamp(38px, 7vw, 88px); line-height: 1.02; letter-spacing: -.03em;
+       font-weight: 800; margin: 0; text-wrap: balance; }
+  h2 { font-size: clamp(28px, 4.4vw, 52px); line-height: 1.08; letter-spacing: -.025em;
+       font-weight: 780; margin: 0 0 18px; text-wrap: balance; }
+  h3 { font-size: 18px; letter-spacing: -.01em; margin: 0; font-weight: 700; }
+  p { color: var(--muted); margin: 0; }
+  .lead { font-size: clamp(17px, 2vw, 21px); color: var(--muted); max-width: 62ch; }
+  .accent { color: var(--accent); }
+  .mono { font-family: var(--mono); }
+
+  /* Fixed chrome */
+  .topbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 40;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px clamp(18px, 4vw, 40px);
+    background: color-mix(in srgb, var(--bg) 82%, transparent);
+    backdrop-filter: blur(10px); border-bottom: 1px solid var(--line);
+  }
+  .brand { display: flex; align-items: center; gap: 11px; font-weight: 700; font-size: 14px; letter-spacing: -.01em; }
+  .brand .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-fill);
+    box-shadow: 0 0 0 4px var(--accent-soft); }
+  .counter { font-family: var(--mono); font-size: 12px; color: var(--faint); letter-spacing: .1em; }
+  .theme-btn {
+    font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+    background: var(--panel); color: var(--muted); border: 1px solid var(--line);
+    border-radius: 999px; padding: 7px 13px; cursor: pointer; transition: all .18s;
+  }
+  .theme-btn:hover { color: var(--ink); border-color: var(--accent-fill); }
+  .theme-btn:focus-visible { outline: 2px solid var(--accent-fill); outline-offset: 2px; }
+
+  .railnav { position: fixed; right: 20px; top: 50%; transform: translateY(-50%); z-index: 40;
+    display: flex; flex-direction: column; gap: 12px; }
+  .railnav a { width: 9px; height: 9px; border-radius: 50%; background: var(--line);
+    transition: all .2s; position: relative; }
+  .railnav a:hover, .railnav a.active { background: var(--accent-fill); transform: scale(1.25); }
+  .railnav a.active { box-shadow: 0 0 0 4px var(--accent-soft); }
+
+  /* Cards / grids */
+  .grid { display: grid; gap: 16px; }
+  .card {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 16px;
+    padding: 22px; box-shadow: var(--shadow);
+  }
+  .chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip {
+    font-family: var(--mono); font-size: 12.5px; letter-spacing: .02em;
+    background: var(--panel-2); border: 1px solid var(--line); color: var(--ink);
+    padding: 8px 14px; border-radius: 999px; display: inline-flex; align-items: center; gap: 8px;
+  }
+  .chip::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--accent-fill); }
+
+  .stat-row { display: flex; flex-wrap: wrap; gap: clamp(24px, 5vw, 64px); margin-top: 30px; }
+  .stat .n { font-family: var(--mono); font-size: clamp(30px, 4vw, 46px); font-weight: 700;
+    letter-spacing: -.02em; color: var(--ink); font-variant-numeric: tabular-nums; }
+  .stat .l { font-size: 13px; color: var(--muted); margin-top: 4px; }
+  .stat .n .accent { color: var(--accent); }
+
+  /* Architecture diagram */
+  .arch { display: grid; gap: 14px; }
+  .orch {
+    background: linear-gradient(135deg, var(--accent-soft), var(--panel));
+    border: 1px solid var(--accent-fill); border-radius: 16px; padding: 20px 24px;
+    text-align: center;
+  }
+  .orch .role { font-family: var(--mono); font-size: 11px; letter-spacing: .18em; text-transform: uppercase; color: var(--accent); }
+  .orch h3 { font-size: 22px; margin: 6px 0 4px; }
+  .agents-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .agent {
+    background: var(--panel); border: 1px solid var(--line); border-radius: 14px;
+    padding: 18px; display: flex; flex-direction: column; gap: 10px; box-shadow: var(--shadow);
+    position: relative; overflow: hidden;
+  }
+  .agent::before { content: ""; position: absolute; top: 0; left: 0; width: 3px; height: 100%; background: var(--accent-fill); }
+  .agent.teal::before { background: var(--teal); }
+  .agent .head { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .agent .ico { font-size: 20px; }
+  .agent h3 { font-size: 15px; }
+  .agent .desc { font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+  .agent .tools { font-family: var(--mono); font-size: 11px; color: var(--faint); letter-spacing: .02em; }
+  .auto {
+    font-family: var(--mono); font-size: 11px; font-weight: 600; letter-spacing: .04em;
+    padding: 4px 9px; border-radius: 999px; white-space: nowrap;
+    background: var(--teal-soft); color: var(--teal);
+  }
+  .auto.mid { background: var(--accent-soft); color: var(--accent); }
+
+  /* Pipeline */
+  .pipe { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0; margin-top: 8px; }
+  .pipe .step { padding: 16px 14px; border: 1px solid var(--line); border-right: none;
+    background: var(--panel); position: relative; }
+  .pipe .step:first-child { border-radius: 14px 0 0 14px; }
+  .pipe .step:last-child { border-radius: 0 14px 14px 0; border-right: 1px solid var(--line); }
+  .pipe .num { font-family: var(--mono); font-size: 11px; color: var(--accent); letter-spacing: .1em; }
+  .pipe .t { font-size: 14px; font-weight: 700; margin: 8px 0 4px; }
+  .pipe .d { font-size: 12px; color: var(--muted); line-height: 1.45; }
+
+  /* Red lines */
+  .redline { display: flex; gap: 16px; align-items: flex-start; padding: 20px;
+    border: 1px solid var(--line); border-left: 3px solid var(--crit); border-radius: 12px;
+    background: var(--panel); }
+  .redline .mark { font-family: var(--mono); color: var(--crit); font-weight: 700; font-size: 13px;
+    background: var(--crit-soft); padding: 3px 8px; border-radius: 6px; white-space: nowrap; }
+  .redline .fix { color: var(--teal); font-weight: 600; }
+
+  /* Portfolio table */
+  .table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 14px; box-shadow: var(--shadow); }
+  table { border-collapse: collapse; width: 100%; min-width: 620px; background: var(--panel); }
+  th, td { text-align: left; padding: 14px 18px; font-size: 14px; border-bottom: 1px solid var(--line); }
+  th { font-family: var(--mono); font-size: 11px; text-transform: uppercase; letter-spacing: .12em;
+    color: var(--faint); font-weight: 600; background: var(--panel-2); }
+  tr:last-child td { border-bottom: none; }
+  td.mono, .tnum { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+  .pill { font-family: var(--mono); font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px; }
+  .pill.live { background: var(--teal-soft); color: var(--teal); }
+  .pill.review { background: var(--accent-soft); color: var(--accent); }
+  .pill.build { background: var(--panel-3); color: var(--muted); }
+
+  /* Roadmap */
+  .phases { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .phase { background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 20px;
+    box-shadow: var(--shadow); position: relative; }
+  .phase .p { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .1em; font-weight: 600; }
+  .phase h3 { margin: 8px 0 8px; font-size: 16px; }
+  .phase p { font-size: 13px; line-height: 1.5; }
+  .phase .risk { margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: .04em; }
+  .risk.low { color: var(--teal); } .risk.med { color: var(--warn); }
+
+  .two-col { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(24px, 5vw, 56px); align-items: center; }
+  .stack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .stack-item { display: flex; flex-direction: column; gap: 3px; padding: 14px 16px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+  .stack-item .k { font-size: 12px; color: var(--faint); font-family: var(--mono); letter-spacing: .04em; }
+  .stack-item .v { font-size: 14.5px; font-weight: 650; color: var(--ink); }
+
+  .cta-box { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 26px; }
+  .cta { display: flex; flex-direction: column; gap: 6px; flex: 1 1 220px;
+    padding: 20px; border-radius: 14px; border: 1px solid var(--line); background: var(--panel);
+    box-shadow: var(--shadow); }
+  .cta .opt { font-family: var(--mono); font-size: 12px; color: var(--accent); letter-spacing: .1em; }
+  .cta .txt { font-size: 15px; font-weight: 650; }
+  .cta .sub { font-size: 13px; color: var(--muted); }
+
+  #hero canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; opacity: .55; }
+  #hero .slide-inner { position: relative; z-index: 1; }
+
+  .reveal { opacity: 0; transform: translateY(16px); transition: opacity .6s ease, transform .6s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  .hint { position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); z-index: 40;
+    font-family: var(--mono); font-size: 11px; letter-spacing: .1em; color: var(--faint);
+    display: flex; align-items: center; gap: 8px; }
+
+  @media (max-width: 860px) {
+    .agents-grid, .phases, .stack-grid { grid-template-columns: 1fr 1fr; }
+    .pipe { grid-template-columns: 1fr 1fr; }
+    .pipe .step { border-right: 1px solid var(--line); border-radius: 12px !important; }
+    .two-col { grid-template-columns: 1fr; }
+    .railnav { display: none; }
+  }
+  @media (max-width: 560px) {
+    .agents-grid, .phases, .stack-grid, .pipe { grid-template-columns: 1fr; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .reveal { transition: none; opacity: 1; transform: none; }
+    #hero canvas { display: none; }
+  }
+</style>
+
+<div class="topbar">
+  <div class="brand"><span class="dot"></span> AdSense&nbsp;Publisher&nbsp;Agent</div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <span class="counter" id="counter">01 / 10</span>
+    <button class="theme-btn" id="themeBtn" aria-label="Cambiar tema">Tema</button>
+  </div>
+</div>
+
+<nav class="railnav" id="rail" aria-label="Navegación de secciones"></nav>
+
+<div class="hint" aria-hidden="true">↓ &nbsp; scroll · ← → teclado</div>
+
+<main class="deck">
+
+  <!-- 01 HERO -->
+  <section class="slide" id="hero" data-title="Portada">
+    <canvas id="net"></canvas>
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Sistema autónomo de publishing · v1 concept</p>
+      <h1 class="reveal">El agente que construye y<br><span class="accent">opera negocios</span> de AdSense.</h1>
+      <p class="lead reveal" style="margin-top:26px;">
+        Un orquestador con sub-agentes especializados que elige el nicho, levanta la web,
+        la despliega, la deja lista para revisión, mantiene el contenido y gestiona un
+        portfolio entero — con la calidad que Google <em>quiere</em> monetizar, no la que penaliza.
+      </p>
+      <div class="stat-row reveal">
+        <div class="stat"><div class="n">6</div><div class="l">sub-agentes especializados</div></div>
+        <div class="stat"><div class="n">4</div><div class="l">APIs de Google en vivo</div></div>
+        <div class="stat"><div class="n"><span class="accent">∞</span></div><div class="l">sitios en un solo portfolio</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 QUÉ HACE -->
+  <section class="slide" data-title="Qué hace">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">La tesis</p>
+      <h2 class="reveal">Ocho capacidades. Un solo sistema.</h2>
+      <p class="lead reveal">Cada capacidad que pediste es un módulo del agente, apoyado en la lógica del manual de AdSense de este repositorio.</p>
+      <div class="chips reveal" style="margin-top:30px;">
+        <span class="chip">Domina AdSense (base de conocimiento)</span>
+        <span class="chip">Elige nichos rentables</span>
+        <span class="chip">Crea la web</span>
+        <span class="chip">Despliega en hosting</span>
+        <span class="chip">Prepara la revisión</span>
+        <span class="chip">Actualiza contenido</span>
+        <span class="chip">Mantenimiento continuo</span>
+        <span class="chip">Gestiona múltiples sitios</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 VERDAD INCÓMODA -->
+  <section class="slide" data-title="Líneas rojas">
+    <div class="slide-inner">
+      <p class="eyebrow reveal" style="--accent:var(--crit);color:var(--crit);">La verdad que protege el negocio</p>
+      <h2 class="reveal">Tres cosas <span style="color:var(--crit);">no</span> se automatizan del todo.</h2>
+      <p class="lead reveal">Automatizar de más aquí es el camino rápido a un portfolio de webs suspendidas. El diseño lo tiene en cuenta.</p>
+      <div class="grid reveal" style="margin-top:26px;gap:14px;">
+        <div class="redline">
+          <span class="mark">SIN API</span>
+          <p><strong style="color:var(--ink)">AdSense no permite solicitar la aprobación por API.</strong>
+          El agente deja el sitio al 100 % y te avisa: <span class="fix">tú das el clic final</span>.</p>
+        </div>
+        <div class="redline">
+          <span class="mark">RIESGO</span>
+          <p><strong style="color:var(--ink)">Contenido masivo de IA sin revisión = "low value" → rechazo o suspensión.</strong>
+          Solución: <span class="fix">un agente validador de E-E-A-T + muestreo humano</span> antes de publicar.</p>
+        </div>
+        <div class="redline">
+          <span class="mark">DATOS</span>
+          <p><strong style="color:var(--ink)">Ningún modelo "sabe todo" en vivo</strong> (RPM, umbrales cambian).
+          Solución: <span class="fix">el manual como base + APIs de Google en tiempo real</span>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 ARQUITECTURA -->
+  <section class="slide" data-title="Arquitectura">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Arquitectura del sistema</p>
+      <h2 class="reveal">Un cerebro. Seis especialistas.</h2>
+      <div class="arch reveal" style="margin-top:22px;">
+        <div class="orch">
+          <div class="role">Orquestador</div>
+          <h3>Gestiona el portfolio · asigna trabajo · prioriza por impacto</h3>
+          <p style="font-size:13px;margin-top:4px;">Aplica la lógica de negocio del manual sobre cada sitio y decide qué hacer y cuándo.</p>
+        </div>
+        <div class="agents-grid">
+          <div class="agent"><div class="head"><span class="ico">🎯</span><span class="auto mid">90% auto</span></div><h3>Nicho</h3><div class="desc">Valida CPC × dificultad × volumen × intención. Devuelve nicho + keywords + clusters.</div><div class="tools">Keyword Planner · Ahrefs · SERP</div></div>
+          <div class="agent"><div class="head"><span class="ico">✍️</span><span class="auto mid">70% auto</span></div><h3>Contenido</h3><div class="desc">Redacta con brief y pasa por validador de calidad y E-E-A-T antes de publicar.</div><div class="tools">Briefs · schema · enlazado</div></div>
+          <div class="agent"><div class="head"><span class="ico">🏗️</span><span class="auto">95% auto</span></div><h3>Builder</h3><div class="desc">Levanta el sitio, páginas legales, CMP, tema ligero y verifica Core Web Vitals.</div><div class="tools">WordPress / Astro · CWV</div></div>
+          <div class="agent"><div class="head"><span class="ico">🚀</span><span class="auto mid">90% auto</span></div><h3>Deploy</h3><div class="desc">Hosting, DNS, SSL, sitemap y alta en Search Console. Avisa "listo para revisión".</div><div class="tools">Cloudflare · Hosting API</div></div>
+          <div class="agent teal"><div class="head"><span class="ico">📊</span><span class="auto">100% auto</span></div><h3>Monitor</h3><div class="desc">Lee APIs en vivo y lanza alertas: RPM, tráfico, CWV, políticas, indexación.</div><div class="tools">AdSense · GA4 · GSC</div></div>
+          <div class="agent"><div class="head"><span class="ico">⚙️</span><span class="auto mid">80% auto</span></div><h3>Optimizer</h3><div class="desc">"Striking distance", densidad de anuncios y refresco de contenido que cae.</div><div class="tools">GSC · A/B · layout</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 05 PIPELINE -->
+  <section class="slide" data-title="Flujo">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Flujo de extremo a extremo</p>
+      <h2 class="reveal">De la idea a la facturación.</h2>
+      <p class="lead reveal">El orquestador mueve cada sitio por este pipeline. El único checkpoint humano es la solicitud de AdSense.</p>
+      <div class="pipe reveal" style="margin-top:26px;">
+        <div class="step"><div class="num">01</div><div class="t">Elige nicho</div><div class="d">Valida CPC, dificultad e intención. Aprueba el humano.</div></div>
+        <div class="step"><div class="num">02</div><div class="t">Crea contenido</div><div class="d">Clusters con brief + validación E-E-A-T.</div></div>
+        <div class="step"><div class="num">03</div><div class="t">Construye</div><div class="d">Web + legal + CMP + CWV en verde.</div></div>
+        <div class="step"><div class="num">04</div><div class="t">Despliega</div><div class="d">Hosting, DNS, SSL, Search Console.</div></div>
+        <div class="step"><div class="num">05</div><div class="t">Revisión ✋</div><div class="d">Listo al 100 %. Tú solicitas AdSense.</div></div>
+        <div class="step"><div class="num">06</div><div class="t">Optimiza</div><div class="d">Monitor + mantenimiento continuo.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 MULTISITIO -->
+  <section class="slide" data-title="Multi-sitio">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Gestión de portfolio</p>
+      <h2 class="reveal">Muchas webs, un panel de mando.</h2>
+      <p class="lead reveal">Cada sitio es un objeto con su estado, sus KPIs y su cola de tareas. Los sistemas se comparten entre todos.</p>
+      <div class="table-wrap reveal" style="margin-top:24px;">
+        <table>
+          <thead><tr><th>Sitio</th><th>Nicho / Geo</th><th>Estado</th><th>RPM</th><th>Cola</th></tr></thead>
+          <tbody>
+            <tr><td class="mono">sitio-01</td><td>Finanzas · ES</td><td><span class="pill live">monetizando</span></td><td class="tnum">14,20 €</td><td class="tnum">12</td></tr>
+            <tr><td class="mono">sitio-02</td><td>Seguros · US</td><td><span class="pill review">en revisión</span></td><td class="tnum">—</td><td class="tnum">3</td></tr>
+            <tr><td class="mono">sitio-03</td><td>SaaS · US</td><td><span class="pill build">construyendo</span></td><td class="tnum">—</td><td class="tnum">28</td></tr>
+            <tr><td class="mono">sitio-04</td><td>Salud · UK</td><td><span class="pill live">monetizando</span></td><td class="tnum">9,80 €</td><td class="tnum">7</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="reveal mono" style="margin-top:16px;font-size:12px;color:var(--faint);letter-spacing:.03em;">
+        REGLA CODIFICADA → no se lanza el sitio N+1 hasta que el sitio N es un sistema estable.
+      </p>
+    </div>
+  </section>
+
+  <!-- 07 STACK -->
+  <section class="slide" data-title="Stack">
+    <div class="slide-inner two-col">
+      <div>
+        <p class="eyebrow reveal">Stack técnico</p>
+        <h2 class="reveal">Construido sobre APIs reales.</h2>
+        <p class="lead reveal">Nada de magia: el agente actúa a través de APIs oficiales y herramientas probadas. La base de conocimiento es el manual de este repositorio.</p>
+      </div>
+      <div class="stack-grid reveal">
+        <div class="stack-item"><span class="k">orquestación</span><span class="v">Claude Agent SDK</span></div>
+        <div class="stack-item"><span class="k">conocimiento</span><span class="v">Manual AdSense (RAG)</span></div>
+        <div class="stack-item"><span class="k">datos google</span><span class="v">AdSense · GA4 · GSC · PSI</span></div>
+        <div class="stack-item"><span class="k">seo</span><span class="v">Ahrefs / Semrush API</span></div>
+        <div class="stack-item"><span class="k">build</span><span class="v">WordPress · Astro/Hugo</span></div>
+        <div class="stack-item"><span class="k">infra</span><span class="v">Cloudflare · Hosting API</span></div>
+        <div class="stack-item"><span class="k">estado</span><span class="v">Postgres + cola de tareas</span></div>
+        <div class="stack-item"><span class="k">versionado</span><span class="v">GitHub</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 08 ROADMAP -->
+  <section class="slide" data-title="Roadmap">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Plan por fases</p>
+      <h2 class="reveal">Primero el cerebro. Luego los brazos.</h2>
+      <p class="lead reveal">Se construye por fases, empezando por lo que da valor sin riesgo de suspensión.</p>
+      <div class="phases reveal" style="margin-top:24px;">
+        <div class="phase"><div class="p">FASE 1</div><h3>Monitor + Optimizer</h3><p>Conecta las APIs de Google. Alertas y recomendaciones. Puro upside.</p><div class="risk low">● riesgo nulo</div></div>
+        <div class="phase"><div class="p">FASE 2</div><h3>Nicho + Contenido</h3><p>Validación de nicho y redacción con checkpoint de calidad E-E-A-T.</p><div class="risk med">● riesgo controlado</div></div>
+        <div class="phase"><div class="p">FASE 3</div><h3>Builder + Deploy</h3><p>Montaje y publicación automática de nuevos sitios.</p><div class="risk low">● riesgo bajo</div></div>
+        <div class="phase"><div class="p">FASE 4</div><h3>Orquestador</h3><p>Gestión multi-sitio autónoma cuando las piezas funcionan solas.</p><div class="risk low">● escala</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 POR QUÉ FUNCIONA -->
+  <section class="slide" data-title="Ventaja">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">Por qué este diseño gana</p>
+      <h2 class="reveal">Calidad automatizada, no cantidad automatizada.</h2>
+      <div class="grid reveal" style="grid-template-columns:1fr 1fr;gap:16px;margin-top:24px;">
+        <div class="card"><h3 style="color:var(--teal)">✓ Lo que hace bien</h3>
+          <p style="margin-top:10px;">Sistematiza todo lo repetitivo y basa cada decisión en datos reales de las APIs de Google y en la lógica probada del manual.</p></div>
+        <div class="card"><h3 style="color:var(--teal)">✓ Human-in-the-loop</h3>
+          <p style="margin-top:10px;">Checkpoints en los puntos de riesgo (calidad de contenido, solicitud de AdSense) evitan la suspensión que hunde a los "generadores de webs en masa".</p></div>
+        <div class="card"><h3 style="color:var(--teal)">✓ Construye un activo</h3>
+          <p style="margin-top:10px;">Optimiza para crear webs que Google quiere monetizar — vendibles a 30-45× su beneficio mensual, no chiringuitos desechables.</p></div>
+        <div class="card"><h3 style="color:var(--teal)">✓ Escala de verdad</h3>
+          <p style="margin-top:10px;">El mismo sistema gestiona 1 o 20 sitios. Los sub-agentes y plantillas se reutilizan en todo el portfolio.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 CIERRE -->
+  <section class="slide" data-title="Siguiente paso">
+    <div class="slide-inner">
+      <p class="eyebrow reveal">El siguiente paso</p>
+      <h2 class="reveal">¿Por dónde arrancamos?</h2>
+      <p class="lead reveal">El diseño está. Ahora se elige el primer bloque a construir en este repositorio.</p>
+      <div class="cta-box reveal">
+        <div class="cta"><span class="opt">OPCIÓN A</span><span class="txt">Documento de arquitectura</span><span class="sub">ARQUITECTURA.md con cada agente, APIs y esquemas de datos.</span></div>
+        <div class="cta"><span class="opt">OPCIÓN B</span><span class="txt">Construir la Fase 1</span><span class="sub">Monitor Agent: APIs de Google → alertas y recomendaciones. Código real.</span></div>
+        <div class="cta"><span class="opt">OPCIÓN C</span><span class="txt">Las dos</span><span class="sub">Arquitectura completa y luego arrancamos la Fase 1.</span></div>
+      </div>
+      <p class="reveal" style="margin-top:30px;font-size:13px;color:var(--faint);font-family:var(--mono);letter-spacing:.03em;">
+        Base de conocimiento → Manual-Google-AdSense-2026.md · repo agente-google-adsese
+      </p>
+    </div>
+  </section>
+
+</main>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  // Theme toggle
+  var btn = document.getElementById('themeBtn');
+  btn.addEventListener('click', function () {
+    var cur = root.getAttribute('data-theme');
+    var isDark = cur ? cur === 'dark'
+      : window.matchMedia('(prefers-color-scheme: dark)').matches;
+    root.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  });
+
+  // Reveal on view
+  var io = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) { if (e.isIntersecting) e.target.classList.add('in'); });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.reveal').forEach(function (el, i) {
+    el.style.transitionDelay = (Math.min(i % 6, 5) * 60) + 'ms';
+    io.observe(el);
+  });
+
+  // Rail nav + counter
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var rail = document.getElementById('rail');
+  var counter = document.getElementById('counter');
+  slides.forEach(function (s, i) {
+    var a = document.createElement('a');
+    a.href = '#'; a.setAttribute('aria-label', s.dataset.title || ('Sección ' + (i + 1)));
+    a.addEventListener('click', function (ev) { ev.preventDefault(); s.scrollIntoView(); });
+    rail.appendChild(a);
+  });
+  var dots = Array.prototype.slice.call(rail.children);
+  function pad(n){ return (n < 10 ? '0' : '') + n; }
+  var spy = new IntersectionObserver(function (entries) {
+    entries.forEach(function (e) {
+      if (e.isIntersecting) {
+        var idx = slides.indexOf(e.target);
+        dots.forEach(function (d, i) { d.classList.toggle('active', i === idx); });
+        counter.textContent = pad(idx + 1) + ' / ' + pad(slides.length);
+      }
+    });
+  }, { threshold: 0.5 });
+  slides.forEach(function (s) { spy.observe(s); });
+
+  // Keyboard nav
+  document.addEventListener('keydown', function (e) {
+    var i = dots.findIndex(function (d) { return d.classList.contains('active'); });
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); if (i < slides.length - 1) slides[i + 1].scrollIntoView(); }
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); if (i > 0) slides[i - 1].scrollIntoView(); }
+  });
+
+  // Hero node network
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var canvas = document.getElementById('net');
+  if (canvas && !reduce) {
+    var ctx = canvas.getContext('2d'), W, H, nodes, raf;
+    function accent() {
+      return getComputedStyle(root).getPropertyValue('--accent-fill').trim() || '#E0A73C';
+    }
+    function resize() {
+      var r = canvas.getBoundingClientRect(), dpr = Math.min(window.devicePixelRatio || 1, 2);
+      W = canvas.width = r.width * dpr; H = canvas.height = r.height * dpr;
+      var count = Math.max(14, Math.round(r.width / 46));
+      nodes = []; for (var i = 0; i < count; i++) nodes.push({
+        x: Math.random() * W, y: Math.random() * H,
+        vx: (Math.random() - .5) * .28 * dpr, vy: (Math.random() - .5) * .28 * dpr,
+        r: (Math.random() * 1.6 + 1) * dpr
+      });
+    }
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+      var col = accent();
+      for (var i = 0; i < nodes.length; i++) {
+        var n = nodes[i]; n.x += n.vx; n.y += n.vy;
+        if (n.x < 0 || n.x > W) n.vx *= -1; if (n.y < 0 || n.y > H) n.vy *= -1;
+        for (var j = i + 1; j < nodes.length; j++) {
+          var m = nodes[j], dx = n.x - m.x, dy = n.y - m.y, d = Math.hypot(dx, dy);
+          var max = 150 * (Math.min(window.devicePixelRatio || 1, 2));
+          if (d < max) {
+            ctx.globalAlpha = (1 - d / max) * .28;
+            ctx.strokeStyle = col; ctx.lineWidth = 1;
+            ctx.beginPath(); ctx.moveTo(n.x, n.y); ctx.lineTo(m.x, m.y); ctx.stroke();
+          }
+        }
+        ctx.globalAlpha = .8; ctx.fillStyle = col;
+        ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2); ctx.fill();
+      }
+      ctx.globalAlpha = 1; raf = requestAnimationFrame(draw);
+    }
+    resize(); draw();
+    window.addEventListener('resize', function () { cancelAnimationFrame(raf); resize(); draw(); });
+  }
+})();
+</script>
