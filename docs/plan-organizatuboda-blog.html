@@ -1,0 +1,905 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Plan Completo — organizatuboda.blog</title>
+<style>
+  @page {
+    size: A4; margin: 17mm 16mm 18mm 16mm;
+  }
+  @page :first { margin: 0; }
+  * { box-sizing: border-box; }
+  :root{
+    --ink:#241f2b; --ink2:#4a4453; --muted:#6c6675; --faint:#8b8594;
+    --gold:#a67c34; --gold-soft:#f3ead9; --gold-line:#d9c49b;
+    --plum:#5f3b57; --plum-soft:#f3e9f0;
+    --sage:#4f7358; --sage-soft:#e6efe8;
+    --crit:#a8412f; --crit-soft:#f6e5e0;
+    --line:#e4e0e8; --bg:#ffffff; --panel:#faf8fb;
+  }
+  html,body{ margin:0; padding:0; }
+  body{
+    font-family:"Helvetica Neue", Arial, sans-serif; color:var(--ink);
+    font-size:10.6pt; line-height:1.5; background:var(--bg);
+    -webkit-print-color-adjust:exact; print-color-adjust:exact;
+  }
+  h1,h2,h3,h4{ font-family:Georgia,"Times New Roman",serif; color:var(--ink); line-height:1.15; }
+  p{ margin:0 0 8px; color:var(--ink2); }
+  a{ color:var(--gold); text-decoration:none; }
+  small{ color:var(--muted); }
+  .mono{ font-family:"SF Mono",Consolas,monospace; }
+
+  /* COVER */
+  .cover{
+    height:297mm; width:210mm; background:linear-gradient(160deg,#2c2233 0%, #4a2f47 55%, #5f3b57 100%);
+    color:#fff; padding:34mm 24mm; position:relative; page-break-after:always;
+    print-color-adjust:exact; -webkit-print-color-adjust:exact; display:flex; flex-direction:column;
+  }
+  .cover .kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.32em; text-transform:uppercase;
+    font-size:9pt; color:var(--gold-line); }
+  .cover h1{ color:#fff; font-size:41pt; line-height:1.04; margin:14px 0 10px; letter-spacing:-.5px; }
+  .cover .dom{ font-family:"SF Mono",Consolas,monospace; font-size:15pt; color:var(--gold-line); margin-top:4px; }
+  .cover .sub{ font-size:12.5pt; color:#e8dfe6; max-width:120mm; margin-top:22px; line-height:1.55; }
+  .cover .rule{ width:64px; height:3px; background:var(--gold); margin:26px 0; }
+  .cover .meta{ margin-top:auto; font-size:9.5pt; color:#cbbfc8; font-family:"SF Mono",Consolas,monospace; letter-spacing:.05em; }
+  .cover .tag{ display:inline-block; border:1px solid rgba(255,255,255,.35); border-radius:40px; padding:5px 14px;
+    font-family:"SF Mono",Consolas,monospace; font-size:8.5pt; letter-spacing:.14em; text-transform:uppercase; color:#fff; margin:4px 6px 0 0;}
+
+  /* SECTION HEADERS */
+  .part-head{ page-break-before:always; border-top:3px solid var(--gold); padding-top:10px; margin-top:6px; }
+  .part-kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.26em; text-transform:uppercase;
+    font-size:8.5pt; color:var(--gold); }
+  h2{ font-size:21pt; margin:6px 0 4px; }
+  h3{ font-size:14pt; margin:20px 0 6px; color:var(--plum); }
+  h4{ font-size:11.5pt; margin:14px 0 4px; color:var(--ink); }
+  .lead{ font-size:11.4pt; color:var(--muted); margin-bottom:6px; }
+
+  /* TOC */
+  .toc{ page-break-after:always; }
+  .toc ol{ list-style:none; padding:0; margin:14px 0 0; counter-reset:toc; }
+  .toc li{ display:flex; justify-content:space-between; align-items:baseline; padding:7px 0; border-bottom:1px dotted var(--line);
+    counter-increment:toc; }
+  .toc li .t::before{ content:counter(toc) ".  "; color:var(--gold); font-family:"SF Mono",Consolas,monospace; }
+  .toc li .t{ font-weight:600; color:var(--ink); }
+  .toc li small{ display:block; color:var(--muted); font-weight:400; }
+
+  /* COMPONENTS */
+  table{ width:100%; border-collapse:collapse; margin:10px 0 14px; font-size:9.6pt; }
+  th,td{ text-align:left; padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--panel); font-family:"SF Mono",Consolas,monospace; font-size:8pt; text-transform:uppercase;
+    letter-spacing:.08em; color:var(--muted); border-bottom:1.5px solid var(--gold-line); }
+  tr{ page-break-inside:avoid; }
+
+  .callout{ border:1px solid var(--line); border-left:4px solid var(--gold); background:var(--gold-soft);
+    padding:11px 14px; border-radius:5px; margin:12px 0; page-break-inside:avoid; }
+  .callout.warn{ border-left-color:var(--crit); background:var(--crit-soft); }
+  .callout.ok{ border-left-color:var(--sage); background:var(--sage-soft); }
+  .callout .lbl{ font-family:"SF Mono",Consolas,monospace; font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--gold); font-weight:700; display:block; margin-bottom:3px; }
+  .callout.warn .lbl{ color:var(--crit); } .callout.ok .lbl{ color:var(--sage); }
+  .callout p:last-child{ margin-bottom:0; }
+
+  .cat-card{ border:1px solid var(--line); border-radius:8px; padding:12px 14px; margin:12px 0; page-break-inside:avoid;
+    background:var(--bg); }
+  .cat-card .catname{ font-family:Georgia,serif; font-size:13pt; color:var(--plum); font-weight:700; }
+  .cat-card .catmeta{ font-family:"SF Mono",Consolas,monospace; font-size:8pt; color:var(--muted); letter-spacing:.05em;
+    margin:2px 0 8px; text-transform:uppercase; }
+  .cat-card ol{ margin:6px 0 0; padding-left:20px; }
+  .cat-card li{ padding:2.5px 0; color:var(--ink2); font-size:9.8pt; }
+  .pillar{ background:var(--gold-soft); border:1px solid var(--gold-line); border-radius:4px; padding:6px 10px;
+    margin:2px 0 8px; font-size:9.6pt; }
+  .pillar b{ color:var(--gold); font-family:"SF Mono",Consolas,monospace; font-size:8pt; letter-spacing:.1em; text-transform:uppercase; }
+  .viral{ display:inline-block; background:var(--plum); color:#fff; font-family:"SF Mono",Consolas,monospace;
+    font-size:6.8pt; letter-spacing:.08em; padding:1px 5px; border-radius:3px; vertical-align:middle; margin-left:5px;
+    text-transform:uppercase; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .stat{ border:1px solid var(--line); border-radius:6px; padding:10px 12px; background:var(--panel); }
+  .stat .n{ font-family:Georgia,serif; font-size:18pt; color:var(--gold); }
+  .stat .l{ font-size:8.6pt; color:var(--muted); }
+
+  ul.clean{ margin:6px 0; padding-left:18px; } ul.clean li{ padding:2px 0; color:var(--ink2); }
+  .check li{ list-style:none; padding:3px 0 3px 22px; position:relative; }
+  .check li::before{ content:"☐"; position:absolute; left:0; color:var(--gold); font-size:11pt; }
+  ol.check{ padding-left:0; }
+
+  .score td:last-child{ font-family:"SF Mono",Consolas,monospace; }
+  .sec{ page-break-before:always; }
+  .avoid{ page-break-inside:avoid; }
+  code{ background:var(--panel); padding:1px 5px; border-radius:3px; font-family:"SF Mono",Consolas,monospace; font-size:9pt; color:var(--plum); }
+  .footer-note{ margin-top:26px; padding-top:10px; border-top:1px solid var(--line); font-size:8.4pt; color:var(--faint); }
+</style>
+</head>
+<body>
+
+<!-- ============ COVER ============ -->
+<div class="cover">
+  <div class="kicker">Plan estratégico · Identidad · SEO · Cumplimiento AdSense</div>
+  <h1>El Plan Completo de<br>organizatuboda<span style="color:#a67c34">.blog</span></h1>
+  <div class="rule"></div>
+  <p class="sub">Portfolio de identidad, páginas legales 10/10 para AdSense y una estrategia SEO
+  exhaustiva —categorías, arquitectura de contenidos y +300 artículos organizados— diseñada,
+  auditada y lista para ejecutar en WordPress.</p>
+  <div>
+    <span class="tag">Nicho bodas · España</span>
+    <span class="tag">Ángulo organización</span>
+    <span class="tag">WordPress</span>
+  </div>
+  <div class="meta">
+    Documento de trabajo · Septiembre 2026 · Basado en 294 keywords analizadas + investigación de mercado<br>
+    Complemento del Manual de Google AdSense — repositorio agente-google-adsese
+  </div>
+</div>
+
+<!-- ============ TOC ============ -->
+<div class="toc">
+  <div class="part-kicker">Contenido</div>
+  <h2>Índice del plan</h2>
+  <ol>
+    <li><span><span class="t">Resumen ejecutivo y filosofía</span><small>Por qué la identidad va antes que la web</small></span></li>
+    <li><span><span class="t">PARTE 1 · Portfolio de identidad y marca (E-E-A-T)</span><small>Quiénes somos, autor real, política editorial</small></span></li>
+    <li><span><span class="t">PARTE 2 · Páginas legales 10/10 para AdSense</span><small>Qué páginas y qué debe contener cada una</small></span></li>
+    <li><span><span class="t">PARTE 3 · Estrategia SEO completa</span><small>Análisis de keywords, arquitectura y clusters</small></span></li>
+    <li><span><span class="t">PARTE 3.1 · Categorías y +300 artículos</span><small>El máximo de artículos organizados por silo</small></span></li>
+    <li><span><span class="t">PARTE 3.2 · Artículos virales para la landing</span><small>El contenido imán de la home</small></span></li>
+    <li><span><span class="t">PARTE 3.3 · SEO on-page, técnico y enlazado</span><small>Cómo se optimiza cada pieza</small></span></li>
+    <li><span><span class="t">PARTE 3.4 · Estrategia de tráfico</span><small>Pinterest, SEO, email y calendario por fases</small></span></li>
+    <li><span><span class="t">PARTE 4 · Auditoría del plan y mejoras</span><small>Auto-crítica y correcciones aplicadas</small></span></li>
+    <li><span><span class="t">Apéndices</span><small>Checklists, KPIs y hoja de ruta</small></span></li>
+  </ol>
+</div>
+
+<!-- ============ RESUMEN ============ -->
+<div class="part-head">
+  <div class="part-kicker">Resumen ejecutivo</div>
+  <h2>La estrategia en una página</h2>
+</div>
+<p class="lead">Este documento convierte <code>organizatuboda.blog</code> en un activo digital diseñado para
+tres objetivos simultáneos: <b>aprobar AdSense casi al 100%</b>, <b>cumplir sus políticas sin zonas grises</b>
+y <b>atraer tráfico masivo</b> vía SEO + Pinterest.</p>
+
+<div class="grid2 avoid">
+  <div class="stat"><div class="n">15</div><div class="l">categorías / silos temáticos</div></div>
+  <div class="stat"><div class="n">300+</div><div class="l">artículos planificados por cluster</div></div>
+  <div class="stat"><div class="n">294</div><div class="l">keywords analizadas de tu Excel</div></div>
+  <div class="stat"><div class="n">25.183&nbsp;€</div><div class="l">gasto medio por boda en España</div></div>
+</div>
+
+<h4>El principio rector: la identidad va PRIMERO</h4>
+<p>Los publishers que facturan de verdad no empiezan por los artículos: empiezan por construir una
+<b>identidad de marca creíble</b> —una persona real detrás, credenciales, una razón de existir— y unas
+<b>páginas legales impecables</b>. Ese es el patrón que dispara la aprobación de AdSense y el E-E-A-T
+que Google premia. Por eso este plan dedica sus dos primeras partes a la identidad y lo legal, <i>antes</i>
+de una sola línea de estrategia de contenidos.</p>
+
+<div class="callout ok">
+  <span class="lbl">La secuencia correcta</span>
+  <p><b>1.</b> Identidad y marca (quién escribe y por qué) → <b>2.</b> Páginas legales 10/10 →
+  <b>3.</b> Contenido SEO en clusters → <b>4.</b> Solicitar AdSense con el sitio ya maduro y con tráfico.
+  Saltarse los pasos 1 y 2 es la causa nº1 de rechazo ("low value content" / faltan páginas esenciales).</p>
+</div>
+
+<h4>Veredicto de partida</h4>
+<table class="score">
+  <tr><th>Dimensión</th><th>Estado</th><th>Nota</th></tr>
+  <tr><td>Facilidad de aprobación (nicho no-YMYL)</td><td>Excelente</td><td>9/10</td></tr>
+  <tr><td>Cumplimiento de políticas AdSense</td><td>Muy alto (vigilar copyright de imágenes)</td><td>9/10</td></tr>
+  <tr><td>Potencial de tráfico (SEO + Pinterest)</td><td>Excelente</td><td>9/10</td></tr>
+  <tr><td>Monetización (AdSense + afiliación + leads)</td><td>Alto vía diversificación</td><td>8/10</td></tr>
+  <tr><td>Competencia SEO (Bodas.net domina)</td><td>Dura → estrategia de cola larga</td><td>5/10</td></tr>
+</table>
+
+<!-- ============ PARTE 1 IDENTIDAD ============ -->
+<div class="part-head">
+  <div class="part-kicker">Parte 1</div>
+  <h2>Portfolio de identidad y marca (E-E-A-T)</h2>
+</div>
+<p class="lead">Antes de la web, la identidad. Esta es la base de confianza que Google evalúa y que convierte
+un blog anónimo en una marca que AdSense quiere monetizar.</p>
+
+<h3>1.1 · Por qué la identidad se construye primero</h3>
+<p>Google no aprueba (ni posiciona bien) sitios anónimos sin señales de <b>quién</b> está detrás,
+<b>por qué</b> existe y <b>cómo</b> se crea el contenido. En bodas —un nicho emocional donde la gente
+confía decisiones de 25.000 €— la identidad no es un adorno: es el activo. El modelo a replicar es el de
+las webs profesionales que muestran una <b>persona real con experiencia</b> como autora (el patrón "Sobre
+Nosotros" con nombre, credenciales y trayectoria).</p>
+
+<h3>1.2 · Ficha de marca de organizatuboda.blog</h3>
+<table>
+  <tr><th>Elemento</th><th>Definición</th></tr>
+  <tr><td>Nombre de marca</td><td>Organiza Tu Boda</td></tr>
+  <tr><td>Dominio</td><td>organizatuboda.blog</td></tr>
+  <tr><td>Promesa (tagline)</td><td>"Organiza la boda de tus sueños sin perder la cabeza (ni arruinarte)"</td></tr>
+  <tr><td>Ángulo / posicionamiento</td><td>Guía práctica de organización y planning: checklists, presupuesto, DIY e ideas reales</td></tr>
+  <tr><td>Tono de voz</td><td>Cercano, tranquilizador, práctico, con experiencia real. Ni cursi ni corporativo</td></tr>
+  <tr><td>Público</td><td>Parejas organizando su boda en España (25-40), + invitados buscando ayuda</td></tr>
+  <tr><td>Handles a reservar</td><td>@organizatuboda en Pinterest, Instagram, TikTok, YouTube (coherencia de marca)</td></tr>
+</table>
+
+<h3>1.3 · La persona real detrás (la pieza clave del E-E-A-T)</h3>
+<div class="callout warn">
+  <span class="lbl">Importante — honestidad</span>
+  <p>El E-E-A-T exige una <b>persona real</b>. Lo que sigue es una <b>plantilla</b> para que la rellenes con
+  una identidad auténtica: tú, tu pareja, o una colaboradora real del sector (una wedding planner, por
+  ejemplo). <b>No inventes una persona ficticia presentándola como real</b> —además de ser un problema de
+  confianza, Google penaliza la falta de autenticidad. Usa a alguien que de verdad pueda aportar experiencia.</p>
+</div>
+
+<h4>Estructura recomendada de la página "Sobre Nosotros" (modelo)</h4>
+<p>Replica esta estructura, que es la que usan las webs profesionales de referencia:</p>
+<ol class="clean">
+  <li><b>Quién escribe en Organiza Tu Boda</b> — presentación de la persona con nombre y foto real.</li>
+  <li><b>Por qué escribe sobre esto</b> — la historia y la experiencia concreta (el "por qué existimos").</li>
+  <li><b>Cómo trabajamos el contenido</b> — política editorial: experiencia directa, fuentes, actualización.</li>
+  <li><b>Nuestra misión</b> — a quién ayudamos y cómo.</li>
+  <li><b>Cómo contactarnos</b> — enlace a Contacto.</li>
+</ol>
+
+<h4>Ejemplo redactado (ilustrativo — sustituir por datos reales)</h4>
+<div class="callout">
+  <span class="lbl">Modelo de texto "Sobre Nosotros"</span>
+  <p style="margin-bottom:6px"><b>Quién escribe en Organiza Tu Boda.</b> Organiza Tu Boda nace para ayudar a
+  las parejas a planificar su boda con claridad y sin agobios: presupuesto, proveedores, tiempos y todos
+  esos detalles que nadie te explica hasta que estás dentro. El contenido está escrito por
+  <b>[NOMBRE Y APELLIDOS]</b>, <b>[wedding planner / organizadora de eventos]</b> con <b>[X]</b> años de
+  experiencia ayudando a organizar bodas en <b>[ciudad/región]</b>.</p>
+  <p style="margin-bottom:6px"><b>Por qué escribe sobre esto.</b> Tras acompañar a decenas de parejas —y
+  tras organizar mi propia boda—, he visto repetirse los mismos errores: presupuestos que se disparan,
+  contratos firmados con prisa, y novios agotados por no tener un sistema. Este blog es el manual que a mí
+  me habría gustado tener.</p>
+  <p style="margin-bottom:0"><b>Cómo trabajamos el contenido.</b> Cada artículo se apoya en experiencia
+  directa y en fuentes verificadas del sector nupcial. Las fotos de nuestros DIY y ejemplos son propias.
+  Revisamos y actualizamos los contenidos para que la información (precios, tendencias) siga siendo útil.</p>
+</div>
+
+<h3>1.4 · Bios de autor en cada artículo</h3>
+<p>Cada artículo debe cerrar con una <b>caja de autor</b>: foto, nombre, una línea de credencial y enlace a
+"Sobre Nosotros" y a redes. Es una señal de E-E-A-T que se repite en todo el sitio y que Google lee como
+autoría consistente.</p>
+
+<h3>1.5 · Señales de confianza transversales</h3>
+<ul class="clean">
+  <li>Fecha de publicación y de <b>última actualización</b> visible en cada artículo.</li>
+  <li>Fuentes citadas y enlazadas cuando se dan datos (precios, estadísticas del sector).</li>
+  <li><b>Declaración de afiliación</b> clara ("este artículo contiene enlaces de afiliado").</li>
+  <li>Presencia coherente en redes (mismo nombre, misma foto, misma marca).</li>
+  <li>Fotos propias o con licencia — <b>nunca</b> imágenes robadas (única política que podrías rozar).</li>
+</ul>
+
+<!-- ============ PARTE 2 LEGALES ============ -->
+<div class="part-head">
+  <div class="part-kicker">Parte 2</div>
+  <h2>Páginas legales 10/10 para AdSense</h2>
+</div>
+<p class="lead">La ausencia de páginas legales es la causa nº1 de rechazo de AdSense. Estas son las páginas
+obligatorias y qué debe contener cada una para alcanzar el nivel de una web profesional.</p>
+
+<div class="callout">
+  <span class="lbl">Contexto legal (España / UE)</span>
+  <p>Al ser una web española con tráfico europeo, además de las políticas de AdSense aplican la <b>LSSI-CE</b>
+  (aviso legal), el <b>RGPD/LOPDGDD</b> (privacidad) y la normativa de <b>cookies</b> con consentimiento
+  previo (CMP). Cumplirlas no solo te aprueba AdSense: te protege legalmente.</p>
+</div>
+
+<h3>2.1 · Las páginas obligatorias</h3>
+<table>
+  <tr><th>Página</th><th>Qué debe contener</th><th>Clave AdSense</th></tr>
+  <tr><td><b>Sobre Nosotros</b></td><td>Identidad real, autor, experiencia, misión (Parte 1)</td><td>E-E-A-T + confianza</td></tr>
+  <tr><td><b>Contacto</b></td><td>Email real + formulario de contacto; opcional dirección/ubicación</td><td>Google debe poder localizarte</td></tr>
+  <tr><td><b>Aviso Legal</b></td><td>Titular de la web, datos de contacto, propiedad intelectual, condiciones de uso (LSSI-CE)</td><td>Legitimidad del sitio</td></tr>
+  <tr><td><b>Política de Privacidad</b></td><td>Qué datos recoges, base legal, derechos RGPD, <b>y mención expresa de Google AdSense y las cookies de publicidad de terceros</b></td><td>Obligatoria para AdSense</td></tr>
+  <tr><td><b>Política de Cookies</b></td><td>Tipos de cookies (analíticas, publicitarias), Google, cómo gestionarlas</td><td>Obligatoria</td></tr>
+  <tr><td><b>Banner de consentimiento (CMP)</b></td><td>Mensaje de cookies con aceptar/rechazar/configurar, integrado con el marco TCF de IAB</td><td>Google exige CMP para tráfico UE</td></tr>
+  <tr><td><b>Aviso de afiliación</b> (recomendado)</td><td>Declaración de que hay enlaces de afiliado y cómo se monetiza</td><td>Transparencia (también es política)</td></tr>
+</table>
+
+<h3>2.2 · La Política de Privacidad y AdSense (el detalle crítico)</h3>
+<p>La política de privacidad <b>debe</b> mencionar explícitamente el uso de publicidad de terceros. Un
+extracto tipo (a personalizar y validar):</p>
+<div class="callout">
+  <span class="lbl">Fragmento modelo — cookies de publicidad</span>
+  <p style="margin-bottom:0">"Este sitio utiliza Google AdSense, un servicio de publicidad de Google. Google
+  y sus socios utilizan cookies para mostrar anuncios basados en visitas previas del usuario a este u otros
+  sitios web. El usuario puede inhibir el uso de cookies publicitarias personalizadas visitando la
+  Configuración de anuncios de Google. Asimismo, se informa del uso de la cookie DART y de proveedores
+  externos que publican anuncios en este sitio."</p>
+</div>
+<div class="callout warn">
+  <span class="lbl">Descargo</span>
+  <p>Los textos legales de este documento son <b>modelos orientativos</b>, no asesoramiento jurídico. Para una
+  web que monetiza, conviene generar los textos con una herramienta legal fiable y, si el proyecto crece,
+  revisarlos con un profesional. Personaliza siempre con tus datos reales de titular.</p>
+</div>
+
+<h3>2.3 · Ubicación y enlazado de las páginas legales</h3>
+<ul class="clean">
+  <li>Todas enlazadas en el <b>pie de página (footer)</b>, visibles en todo el sitio.</li>
+  <li>Contacto y Sobre Nosotros, también en el <b>menú principal</b>.</li>
+  <li>El banner de cookies aparece en la <b>primera visita</b>, antes de cargar anuncios personalizados.</li>
+  <li>HTTPS activo en todo el dominio (candado SSL).</li>
+</ul>
+
+<h3>2.4 · Checklist de páginas (antes de solicitar AdSense)</h3>
+<ol class="check">
+  <li>Sobre Nosotros con persona real y credenciales</li>
+  <li>Contacto con email real + formulario</li>
+  <li>Aviso Legal (LSSI-CE) con datos del titular</li>
+  <li>Política de Privacidad con mención expresa de Google AdSense</li>
+  <li>Política de Cookies</li>
+  <li>Banner CMP con aceptar/rechazar/configurar (marco TCF)</li>
+  <li>Aviso de afiliación</li>
+  <li>Todas enlazadas en el footer; HTTPS activo</li>
+</ol>
+
+<!-- ============ PARTE 3 SEO ============ -->
+<div class="part-head">
+  <div class="part-kicker">Parte 3</div>
+  <h2>Estrategia SEO completa</h2>
+</div>
+<p class="lead">Analizamos tu universo de keywords, definimos la arquitectura del sitio en silos y desplegamos
+el máximo de artículos organizados en clusters.</p>
+
+<h3>3.1 · Análisis de tu keyword set (294 keywords)</h3>
+<p>Tu Excel de Keyword Planner suma <b>~551.500 búsquedas/mes</b> de volumen agregado (con los rangos
+"bucketizados" típicos de Google: 50.000 / 5.000 / 500 / 50). Distribución temática detectada:</p>
+<table>
+  <tr><th>Bloque temático</th><th>Kws</th><th>Vol./mes aprox.</th><th>Lectura estratégica</th></tr>
+  <tr><td>Marca/genéricas + venues concretos</td><td>~150</td><td>~122.000</td><td>Muchos nombres de fincas/proveedores: no competir; usar para inspiración local</td></tr>
+  <tr><td>Fotografía y vídeo (fotomatón)</td><td>5</td><td>~110.500</td><td>"fotomatón" tiene volumen enorme y competencia baja: oportunidad</td></tr>
+  <tr><td>Vestido y belleza novia</td><td>22</td><td>~72.200</td><td>Alto volumen; muy visual → Pinterest</td></tr>
+  <tr><td>Detalles y regalos invitados</td><td>22</td><td>~56.000</td><td>Intención comercial + DIY: afiliación</td></tr>
+  <tr><td>Tipos de boda (playa, civil…)</td><td>28</td><td>~44.600</td><td>Competencia baja: sub-nichos ideales</td></tr>
+  <tr><td>Aniversarios de boda</td><td>18</td><td>~37.350</td><td>Evergreen, competencia baja: tráfico fácil</td></tr>
+  <tr><td>Lugar / finca / venue</td><td>9</td><td>~36.000</td><td>Cuidado: dominado por portales</td></tr>
+  <tr><td>Invitaciones y papelería</td><td>7</td><td>~10.700</td><td>Comercial + DIY</td></tr>
+  <tr><td>Organización/planning + resto</td><td>~33</td><td>~26.000</td><td>El corazón de la marca; cola larga</td></tr>
+</table>
+<div class="callout">
+  <span class="lbl">Hallazgos clave del análisis</span>
+  <p><b>1.</b> Hay <b>oro de baja competencia</b> con volumen alto: "fotomatón", "aniversarios de boda",
+  "tipos de boda (playa/civil)". <b>2.</b> La <b>intención comercial</b> (afiliación) vive en detalles,
+  invitaciones, decoración y vestido de invitada. <b>3.</b> Muchas keywords son <b>marcas de proveedores</b>
+  concretos (fincas): no se atacan de frente, pero inspiran contenido local ("mejores fincas para bodas en…").</p>
+</div>
+
+<h3>3.2 · Arquitectura del sitio: 15 silos temáticos</h3>
+<p>Cada categoría es un <b>silo</b> con una <b>guía pilar</b> (contenido madre) y decenas de artículos de
+apoyo (spokes) enlazados entre sí. Así se construye autoridad temática y se sube "páginas por sesión".</p>
+
+<!-- ============ PARTE 3.1 CATEGORIES + ARTICLES ============ -->
+<div class="sec">
+<div class="part-kicker">Parte 3.1</div>
+<h2 style="font-size:18pt">Las 15 categorías y sus artículos</h2>
+<p class="lead">El máximo de artículos posible, organizado por categoría. <span class="viral">VIRAL</span> marca
+los candidatos a destacar en la landing (ver Parte 3.2).</p>
+
+<!-- 1 -->
+<div class="cat-card">
+  <div class="catname">1 · Organización y Planning</div>
+  <div class="catmeta">Silo pilar de la marca · intención informacional · el corazón del blog</div>
+  <div class="pillar"><b>Pilar</b> · Cómo organizar una boda paso a paso: la guía definitiva (2026)</div>
+  <ol>
+    <li>Checklist de boda: qué hacer mes a mes (12 meses antes) <span class="viral">VIRAL</span></li>
+    <li>Cronograma del día de la boda: horario perfecto hora por hora</li>
+    <li>Cuánto tiempo se necesita para organizar una boda</li>
+    <li>Los 15 errores más comunes al organizar una boda (y cómo evitarlos)</li>
+    <li>Cómo organizar una boda en 6 meses (plan exprés)</li>
+    <li>Cómo repartir tareas entre los novios sin discutir</li>
+    <li>Wedding planner: ¿merece la pena? Precios y cuándo contratarla</li>
+    <li>Apps y herramientas gratis para organizar tu boda</li>
+    <li>Cómo hacer la lista de invitados sin dramas familiares</li>
+    <li>Plan B para bodas al aire libre: qué hacer si llueve</li>
+    <li>Documentación y trámites para casarse en España</li>
+    <li>Organizar una boda trabajando: guía para novios sin tiempo</li>
+    <li>Cómo elegir la fecha perfecta para tu boda</li>
+    <li>Timing de reservas: qué contratar primero y con cuánta antelación</li>
+    <li>Cómo delegar en tu día de boda para disfrutarlo</li>
+  </ol>
+</div>
+
+<!-- 2 -->
+<div class="cat-card">
+  <div class="catname">2 · Presupuesto y Bodas Low Cost</div>
+  <div class="catmeta">Dolor real (35% se pasa de presupuesto) · alta compartibilidad · afiliación</div>
+  <div class="pillar"><b>Pilar</b> · Presupuesto de boda: cómo repartir 25.000 € (o gastar mucho menos)</div>
+  <ol>
+    <li>Cómo ahorrar en tu boda sin que se note: 30 trucos reales <span class="viral">VIRAL</span></li>
+    <li>Plantilla de presupuesto de boda en Excel (gratis) <span class="viral">VIRAL</span></li>
+    <li>Cuánto cuesta una boda en España en 2026 (desglose real)</li>
+    <li>Boda low cost para 50 invitados: presupuesto detallado</li>
+    <li>Boda civil sencilla y barata: cómo organizarla</li>
+    <li>Los gastos ocultos de una boda que nadie te cuenta</li>
+    <li>Cómo casarse por menos de 5.000 €</li>
+    <li>En qué SÍ y en qué NO merece la pena gastar en tu boda</li>
+    <li>Bodas de día vs. de noche: cuál es más barata</li>
+    <li>Casarse entre semana: cuánto ahorras de verdad</li>
+    <li>Financiar tu boda: opciones y riesgos (sin arruinarte)</li>
+    <li>Cómo negociar con proveedores de boda y bajar precios</li>
+    <li>Bodas íntimas: menos invitados, más presupuesto por persona</li>
+    <li>Presupuesto de boda para 100 invitados paso a paso</li>
+  </ol>
+</div>
+
+<!-- 3 -->
+<div class="cat-card">
+  <div class="catname">3 · Invitaciones y Papelería</div>
+  <div class="catmeta">Comercial + DIY · muy visual (Pinterest) · afiliación</div>
+  <div class="pillar"><b>Pilar</b> · Invitaciones de boda: guía completa (tipos, textos, precios y dónde comprarlas)</div>
+  <ol>
+    <li>Qué poner en una invitación de boda: textos y ejemplos <span class="viral">VIRAL</span></li>
+    <li>Invitaciones de boda digitales: mejores webs y apps</li>
+    <li>Invitaciones de boda DIY: hazlas tú misma paso a paso <span class="viral">VIRAL</span></li>
+    <li>Save the date: qué es, cuándo enviarlo e ideas</li>
+    <li>Invitaciones de boda civil: textos y modelos</li>
+    <li>Minuta de boda: qué es y cómo hacerla (con plantillas)</li>
+    <li>Marcasitios de boda: ideas originales y DIY</li>
+    <li>Números de mesa originales para tu boda</li>
+    <li>Seating plan (plano de mesas): cómo hacerlo sin volverte loco <span class="viral">VIRAL</span></li>
+    <li>Meseros y protocolo: cómo sentar a los invitados</li>
+    <li>Recordatorios de boda: ideas y textos</li>
+    <li>Carteles de bienvenida para bodas: ideas DIY</li>
+    <li>Libro de firmas original: 15 alternativas creativas</li>
+    <li>Papelería de boda: kit completo y en qué orden encargarla</li>
+  </ol>
+</div>
+
+<!-- 4 -->
+<div class="cat-card">
+  <div class="catname">4 · Detalles y Regalos para Invitados</div>
+  <div class="catmeta">Alta intención comercial · afiliación fuerte · volumen alto en tu Excel</div>
+  <div class="pillar"><b>Pilar</b> · Detalles de boda para invitados: 60 ideas originales, útiles y baratas</div>
+  <ol>
+    <li>Detalles de boda originales y útiles por menos de 3 € <span class="viral">VIRAL</span></li>
+    <li>Detalles de boda baratos: 40 ideas low cost <span class="viral">VIRAL</span></li>
+    <li>Detalles de boda DIY: hazlos tú misma (con fotos) <span class="viral">VIRAL</span></li>
+    <li>Detalles de boda unisex que gustan a todos</li>
+    <li>Candy bar de boda: cómo montarla y qué poner</li>
+    <li>Detalles para niños en bodas: ideas para entretenerlos</li>
+    <li>Detalles gourmet para invitados: comestibles que triunfan</li>
+    <li>Detalles de boda personalizados: dónde comprarlos</li>
+    <li>Regalos para los padres de los novios</li>
+    <li>Regalos para damas de honor y testigos</li>
+    <li>Detalles de boda ecológicos y sostenibles</li>
+    <li>Kit anti-resaca y kit de supervivencia para invitados</li>
+    <li>Detalles de boda hechos a mano que parecen caros</li>
+    <li>Semillas, plantas y detalles verdes para tu boda</li>
+  </ol>
+</div>
+
+<!-- 5 -->
+<div class="cat-card">
+  <div class="catname">5 · Decoración y DIY</div>
+  <div class="catmeta">Mina de Pinterest · fotos propias = aprobación garantizada · afiliación</div>
+  <div class="pillar"><b>Pilar</b> · Decoración de boda: guía completa de estilos, ideas y DIY</div>
+  <ol>
+    <li>Centros de mesa para boda: 30 ideas (low cost y DIY) <span class="viral">VIRAL</span></li>
+    <li>Decoración de boda sencilla en casa o jardín, paso a paso <span class="viral">VIRAL</span></li>
+    <li>Photocall de boda: ideas DIY y atrezzo <span class="viral">VIRAL</span></li>
+    <li>Decoración de boda con flores: guía por temporada</li>
+    <li>Arco de boda: cómo hacerlo tú misma</li>
+    <li>Iluminación para bodas: guirnaldas, velas y ambiente</li>
+    <li>Letras gigantes y carteles para bodas</li>
+    <li>Decoración de boda civil: ideas para el salón</li>
+    <li>Decoración de boda en la playa</li>
+    <li>Rincón de fotos y libro de firmas decorado</li>
+    <li>Cómo decorar las sillas de los novios</li>
+    <li>Decoración de mesa presidencial</li>
+    <li>Globos para bodas: ideas elegantes (no infantiles)</li>
+    <li>Paleta de colores para tu boda: cómo elegirla</li>
+    <li>Decoración de boda por estilos: boho, rústica, clásica, minimal</li>
+  </ol>
+</div>
+
+<!-- 6 -->
+<div class="cat-card">
+  <div class="catname">6 · La Novia: vestido, belleza y complementos</div>
+  <div class="catmeta">Volumen altísimo · muy visual · afiliación (complementos)</div>
+  <div class="pillar"><b>Pilar</b> · Vestido de novia: guía para elegir el perfecto según tu cuerpo y estilo</div>
+  <ol>
+    <li>Tipos de vestido de novia según tu figura <span class="viral">VIRAL</span></li>
+    <li>Velo de novia: tipos (largos, cortos) y cómo elegirlo</li>
+    <li>Peinados de novia: 40 ideas según el vestido <span class="viral">VIRAL</span></li>
+    <li>Maquillaje de novia: guía para que dure todo el día</li>
+    <li>Ramo de novia: tipos, flores y significado</li>
+    <li>Tocados, tiaras y coronas de novia</li>
+    <li>Zapatos de novia: cómodos y bonitos (sí existen)</li>
+    <li>Prueba de vestido: cuándo hacerla y qué llevar</li>
+    <li>Vestido de novia civil: opciones sencillas y elegantes</li>
+    <li>Vestido de novia para boda en la playa</li>
+    <li>Lencería de novia: qué llevar según el vestido</li>
+    <li>Cuidado de la piel semanas antes de la boda</li>
+    <li>Dónde comprar el vestido de novia: atelier vs. low cost</li>
+    <li>Segundo vestido para la fiesta: ideas</li>
+  </ol>
+</div>
+
+<!-- 7 -->
+<div class="cat-card">
+  <div class="catname">7 · El Novio: traje y look</div>
+  <div class="catmeta">Poco competido · afiliación (trajes, complementos)</div>
+  <div class="pillar"><b>Pilar</b> · Traje de novio: cómo elegirlo según la boda y la estación</div>
+  <ol>
+    <li>Tipos de traje de novio y cuándo llevar cada uno</li>
+    <li>Traje de novio para boda de día vs. de noche</li>
+    <li>Complementos del novio: corbata, pajarita, gemelos, zapatos</li>
+    <li>Look de novio para boda en la playa</li>
+    <li>Peinado y barba del novio: guía de estilo</li>
+    <li>Traje de novio a medida vs. comprado vs. alquilado</li>
+    <li>Errores de estilo del novio que se ven en las fotos</li>
+    <li>Cómo coordinar el look del novio con el de la novia</li>
+  </ol>
+</div>
+
+<!-- 8 -->
+<div class="cat-card">
+  <div class="catname">8 · Los Invitados (guía del invitado perfecto)</div>
+  <div class="catmeta">Mercado enorme (123 invitados/boda) · poco competido · afiliación (looks, regalos)</div>
+  <div class="pillar"><b>Pilar</b> · Guía del invitado perfecto: qué ponerte, cuánto regalar y cómo comportarte</div>
+  <ol>
+    <li>Cuánto dinero se regala en una boda en 2026 <span class="viral">VIRAL</span></li>
+    <li>Vestidos de invitada de boda de día: 40 looks <span class="viral">VIRAL</span></li>
+    <li>Vestidos de invitada de boda de noche</li>
+    <li>Qué ponerse para una boda si eres hombre</li>
+    <li>Qué NO ponerse a una boda (errores de invitada)</li>
+    <li>Regalos de boda originales cuando no hay lista</li>
+    <li>Cómo vestir para una boda en la playa (invitados)</li>
+    <li>Invitada en invierno: looks con abrigo</li>
+    <li>Tocados y complementos de invitada</li>
+    <li>Protocolo del invitado: dudas frecuentes resueltas</li>
+    <li>Ir a una boda con niños: guía de supervivencia</li>
+    <li>Cuánto regalar en una boda si vas en pareja o en familia</li>
+  </ol>
+</div>
+
+<!-- 9 -->
+<div class="cat-card">
+  <div class="catname">9 · Ceremonia y Protocolo</div>
+  <div class="catmeta">Civil vs. religiosa · votos · padrinos · competencia baja</div>
+  <div class="pillar"><b>Pilar</b> · La ceremonia de boda: civil, religiosa y simbólica explicadas</div>
+  <ol>
+    <li>Cómo escribir tus votos de boda (con ejemplos) <span class="viral">VIRAL</span></li>
+    <li>Boda civil paso a paso: trámites, requisitos y guion</li>
+    <li>Papel de la madrina de boda: funciones y protocolo</li>
+    <li>Papel del padrino: qué hace y qué se espera de él</li>
+    <li>Testigos de boda: cuántos, quién y qué firman</li>
+    <li>Discurso de boda: cómo escribirlo sin morir de vergüenza</li>
+    <li>Lecturas para bodas civiles emotivas</li>
+    <li>Ceremonia simbólica: arras, arena, velas y rituales</li>
+    <li>Orden de entrada y protocolo de la ceremonia</li>
+    <li>Música para la ceremonia: entrada, firma y salida</li>
+    <li>Damas de honor y cortejo: cómo organizarlo</li>
+    <li>Bodas civiles al aire libre: qué necesitas</li>
+  </ol>
+</div>
+
+<!-- 10 -->
+<div class="cat-card">
+  <div class="catname">10 · Banquete, Catering y Tarta</div>
+  <div class="catmeta">53% del presupuesto va aquí · leads a proveedores · afiliación</div>
+  <div class="pillar"><b>Pilar</b> · El banquete de boda: cómo elegir catering, menú y bebida</div>
+  <ol>
+    <li>Cómo elegir el catering de tu boda: preguntas clave</li>
+    <li>Menú de boda: estructura y ejemplos por presupuesto</li>
+    <li>Cóctel de bienvenida: ideas y cuánto debe durar</li>
+    <li>Barra libre de boda: cómo calcular bebida y evitar sustos</li>
+    <li>Tarta de boda: tendencias, sabores y precio <span class="viral">VIRAL</span></li>
+    <li>Alternativas a la tarta: mesa de dulces y candy bar</li>
+    <li>Menú de boda para invitados con alergias e intolerancias</li>
+    <li>Food trucks y catering informal para bodas</li>
+    <li>Menú infantil: qué ofrecer a los niños</li>
+    <li>Cómo hacer el seating del banquete y calcular mesas</li>
+    <li>Bodas vegetarianas y veganas: menús que triunfan</li>
+  </ol>
+</div>
+
+<!-- 11 -->
+<div class="cat-card">
+  <div class="catname">11 · Lugares y Fincas (venue)</div>
+  <div class="catmeta">Dominado por portales → atacar por localización + guías, no de frente</div>
+  <div class="pillar"><b>Pilar</b> · Cómo elegir el lugar de tu boda: checklist antes de firmar</div>
+  <ol>
+    <li>Preguntas que hacer antes de reservar una finca de bodas <span class="viral">VIRAL</span></li>
+    <li>Fincas vs. hoteles vs. restaurantes para bodas: pros y contras</li>
+    <li>Cláusulas del contrato de la finca que debes revisar</li>
+    <li>Bodas en casa o en el jardín: qué necesitas organizar</li>
+    <li>Mejores tipos de lugar para una boda íntima</li>
+    <li>Bodas en viñedos: qué tener en cuenta</li>
+    <li>Cómo visitar una finca de bodas: qué mirar</li>
+    <li>Bodas en la playa en España: permisos y logística</li>
+    <li>[Serie local] Ideas de lugares para bodas en [tu región]</li>
+  </ol>
+</div>
+
+<!-- 12 -->
+<div class="cat-card">
+  <div class="catname">12 · Fotografía, Vídeo y Entretenimiento</div>
+  <div class="catmeta">"Fotomatón" = volumen enorme + competencia baja · leads + afiliación</div>
+  <div class="pillar"><b>Pilar</b> · Fotografía de boda: cómo elegir fotógrafo y qué te tiene que dar</div>
+  <ol>
+    <li>Fotomatón para bodas: precios, tipos y alternativas DIY <span class="viral">VIRAL</span></li>
+    <li>Cómo hacer un fotomatón casero para tu boda <span class="viral">VIRAL</span></li>
+    <li>Preguntas clave a tu fotógrafo de boda antes de contratar</li>
+    <li>Vídeo de boda: ¿merece la pena? Estilos y precios</li>
+    <li>Cómo elegir el DJ o grupo para tu boda</li>
+    <li>Playlist de boda: canciones para cada momento <span class="viral">VIRAL</span></li>
+    <li>Primer baile: cómo elegir la canción y no morir de nervios</li>
+    <li>Entretenimiento para invitados: ideas más allá del baile</li>
+    <li>Ideas de animación para bodas con niños</li>
+    <li>Hashtag de boda y cómo recopilar las fotos de invitados</li>
+    <li>Álbum de boda: qué formato elegir</li>
+  </ol>
+</div>
+
+<!-- 13 -->
+<div class="cat-card">
+  <div class="catname">13 · Tipos de Boda (sub-nichos)</div>
+  <div class="catmeta">Competencia baja · muy segmentado · ideal para autoridad temática</div>
+  <div class="pillar"><b>Pilar</b> · Tipos de boda: encuentra el estilo que va contigo</div>
+  <ol>
+    <li>Boda en la playa: guía completa para organizarla <span class="viral">VIRAL</span></li>
+    <li>Boda civil: todo lo que necesitas saber</li>
+    <li>Boda íntima o micro-wedding: cómo organizarla</li>
+    <li>Boda en el campo / rústica: ideas y logística</li>
+    <li>Boda temática: 20 ideas originales</li>
+    <li>Boda de invierno: ventajas, decoración y looks</li>
+    <li>Boda de noche: cómo organizarla</li>
+    <li>Boda en inglés / bilingüe: guion y detalles</li>
+    <li>Boda sorpresa y elopement: qué son y cómo hacerlas</li>
+    <li>Boda LGTBI: ideas, protocolo y proveedores friendly</li>
+    <li>Boda ecológica y sostenible: guía práctica</li>
+  </ol>
+</div>
+
+<!-- 14 -->
+<div class="cat-card">
+  <div class="catname">14 · Aniversarios de Boda</div>
+  <div class="catmeta">Evergreen · competencia baja · volumen alto en tu Excel · afiliación (regalos)</div>
+  <div class="pillar"><b>Pilar</b> · Aniversarios de boda: nombre de cada año y qué regalar</div>
+  <ol>
+    <li>Bodas de oro (50 años): ideas para celebrarlas y regalos <span class="viral">VIRAL</span></li>
+    <li>Bodas de plata (25 años): ideas y regalos</li>
+    <li>Bodas de papel (1 año): qué regalar</li>
+    <li>Bodas de diamante (60 años): cómo celebrarlas</li>
+    <li>Tabla completa de aniversarios de boda año por año <span class="viral">VIRAL</span></li>
+    <li>Regalos de aniversario según los años de casados</li>
+    <li>Ideas para renovar los votos matrimoniales</li>
+    <li>Frases y felicitaciones de aniversario de boda</li>
+    <li>Cómo organizar una fiesta de aniversario de boda</li>
+  </ol>
+</div>
+
+<!-- 15 -->
+<div class="cat-card">
+  <div class="catname">15 · Luna de Miel y Post-boda</div>
+  <div class="catmeta">Afiliación de viajes (comisiones altas) · trámites post-boda</div>
+  <div class="pillar"><b>Pilar</b> · Luna de miel: cómo planificarla y destinos por presupuesto</div>
+  <ol>
+    <li>Destinos de luna de miel según el mes del año</li>
+    <li>Luna de miel barata: destinos y trucos</li>
+    <li>Lista de bodas para financiar el viaje: cómo montarla</li>
+    <li>Trámites después de la boda: cambio de apellidos, libro de familia</li>
+    <li>Qué hacer con el vestido después de la boda</li>
+    <li>Agradecimientos post-boda: textos e ideas</li>
+    <li>Cómo elegir las fotos y montar el álbum tras la boda</li>
+    <li>Mini-luna de miel: escapadas de fin de semana</li>
+  </ol>
+</div>
+
+<div class="callout ok">
+  <span class="lbl">Recuento</span>
+  <p>15 categorías · 15 guías pilar · <b>~185 artículos de apoyo listados</b> como arranque. El sistema es
+  <b>escalable a 300+</b>: cada pilar admite continuamente nuevos spokes de cola larga (variantes por estilo,
+  presupuesto, temporada, número de invitados y localización). En la Parte 3.3 se explica cómo expandirlo.</p>
+</div>
+</div>
+
+<!-- ============ PARTE 3.2 VIRALES ============ -->
+<div class="sec">
+<div class="part-kicker">Parte 3.2</div>
+<h2 style="font-size:18pt">Artículos virales para la landing</h2>
+<p class="lead">La home debe destacar el contenido con mayor potencial de tráfico, compartición (Pinterest) y
+captación de email. Son piezas evergreen, muy buscadas y "salvables" en un tablero.</p>
+
+<table>
+  <tr><th>#</th><th>Artículo imán</th><th>Por qué es viral</th><th>Categoría</th></tr>
+  <tr><td>1</td><td>Checklist de boda mes a mes (descargable)</td><td>Búsqueda altísima + lead magnet + Pinterest</td><td>Organización</td></tr>
+  <tr><td>2</td><td>Plantilla de presupuesto de boda en Excel</td><td>Utilidad pura → enlaces y guardados</td><td>Presupuesto</td></tr>
+  <tr><td>3</td><td>Cómo ahorrar en tu boda: 30 trucos reales</td><td>Dolor universal (35% se pasa)</td><td>Presupuesto</td></tr>
+  <tr><td>4</td><td>Detalles de boda originales y baratos (&lt;3 €)</td><td>Comercial + muy compartible</td><td>Detalles</td></tr>
+  <tr><td>5</td><td>Centros de mesa DIY: 30 ideas con fotos</td><td>Rey de Pinterest + fotos propias</td><td>Decoración</td></tr>
+  <tr><td>6</td><td>Cuánto se regala en una boda en 2026</td><td>Pregunta que TODO invitado busca</td><td>Invitados</td></tr>
+  <tr><td>7</td><td>Vestidos de invitada de día: 40 looks</td><td>Volumen + afiliación + visual</td><td>Invitados</td></tr>
+  <tr><td>8</td><td>Seating plan: cómo hacerlo sin volverte loco</td><td>Dolor concreto + plantilla</td><td>Papelería</td></tr>
+  <tr><td>9</td><td>Peinados de novia: 40 ideas</td><td>Explota en Pinterest</td><td>La Novia</td></tr>
+  <tr><td>10</td><td>Fotomatón de boda + cómo hacerlo casero</td><td>Volumen enorme, competencia baja</td><td>Fotografía</td></tr>
+  <tr><td>11</td><td>Tabla de aniversarios de boda año por año</td><td>Evergreen, se busca y se comparte</td><td>Aniversarios</td></tr>
+  <tr><td>12</td><td>Cómo escribir tus votos (con ejemplos)</td><td>Emocional → muy compartible</td><td>Ceremonia</td></tr>
+</table>
+
+<div class="callout">
+  <span class="lbl">Diseño de la landing</span>
+  <p>La home debe combinar: <b>(a)</b> un bloque hero con la promesa de marca + captación de email
+  (checklist gratis), <b>(b)</b> acceso claro a las 15 categorías, <b>(c)</b> una rejilla de estos artículos
+  virales con imagen, y <b>(d)</b> señales de confianza (autor, "Sobre Nosotros"). El objetivo doble de la
+  landing: <b>captar el email</b> y <b>repartir tráfico</b> a los clusters (subir páginas/sesión).</p>
+</div>
+</div>
+
+<!-- ============ PARTE 3.3 ONPAGE ============ -->
+<div class="sec">
+<div class="part-kicker">Parte 3.3</div>
+<h2 style="font-size:18pt">SEO on-page, técnico y enlazado interno</h2>
+
+<h3>Estrategia de clusters (cómo llegar a 300+)</h3>
+<p>Cada guía pilar se rodea de spokes de cola larga. La expansión sistemática multiplica los artículos sin
+canibalizar, generando variantes por <b>eje</b>:</p>
+<table>
+  <tr><th>Eje de expansión</th><th>Ejemplo (a partir de "centros de mesa")</th></tr>
+  <tr><td>Por estilo</td><td>centros de mesa rústicos / boho / minimalistas / clásicos</td></tr>
+  <tr><td>Por presupuesto</td><td>centros de mesa low cost / de menos de 10 €</td></tr>
+  <tr><td>Por material</td><td>centros de mesa con velas / con flores secas / con frutas</td></tr>
+  <tr><td>Por temporada</td><td>centros de mesa de invierno / de verano / otoñales</td></tr>
+  <tr><td>Por localización</td><td>ideas para bodas en [ciudad/región]</td></tr>
+</table>
+
+<h3>Checklist on-page por artículo</h3>
+<ul class="clean">
+  <li>Keyword principal en <b>título SEO, H1 y URL</b> corta.</li>
+  <li>Satisfacer la <b>intención</b> mejor que el top 10 (leer el SERP antes de escribir).</li>
+  <li>Estructura H2/H3 que cubra subtemas y "People Also Ask".</li>
+  <li><b>Enlazado interno</b>: cada spoke enlaza a su pilar y a 2-3 hermanos.</li>
+  <li>Imágenes propias optimizadas (WebP, <code>alt</code> descriptivo).</li>
+  <li><b>Schema</b>: Article, FAQ, HowTo, ItemList según el tipo.</li>
+  <li>Caja de autor + fecha de actualización (E-E-A-T).</li>
+  <li>Respuesta directa arriba (para UX y AI Overviews).</li>
+</ul>
+
+<h3>SEO técnico (WordPress)</h3>
+<table>
+  <tr><th>Área</th><th>Acción</th></tr>
+  <tr><td>Tema</td><td>Tema ligero (GeneratePress/Kadence/Astra). Evitar page builders pesados</td></tr>
+  <tr><td>Velocidad</td><td>Caché + CDN (Cloudflare) + hosting con buen TTFB; Core Web Vitals en verde</td></tr>
+  <tr><td>Plugin SEO</td><td>Rank Math o Yoast (schema, sitemaps, metas)</td></tr>
+  <tr><td>Indexación</td><td>Search Console + sitemap XML; vigilar cobertura</td></tr>
+  <tr><td>Estructura</td><td>Silos por categoría, breadcrumbs, URLs limpias</td></tr>
+  <tr><td>Imágenes</td><td>Compresión + WebP + lazy-load (menos la imagen LCP)</td></tr>
+  <tr><td>Anuncios (post-aprobación)</td><td>Espacio reservado (anti-CLS), in-content tras 2º párrafo, anchor móvil</td></tr>
+</table>
+</div>
+
+<!-- ============ PARTE 3.4 TRAFICO ============ -->
+<div class="sec">
+<div class="part-kicker">Parte 3.4</div>
+<h2 style="font-size:18pt">Estrategia de tráfico</h2>
+<p class="lead">Bodas es de los pocos nichos con varios canales potentes. No dependemos solo de Google.</p>
+
+<h3>Pinterest — el motor #1 del nicho</h3>
+<p>Las bodas son el contenido rey de Pinterest (buscador visual, tráfico evergreen). Estrategia:</p>
+<ul class="clean">
+  <li>Cuenta de <b>empresa</b> + Rich Pins conectados a la web.</li>
+  <li>Pines verticales (1000×1500) con texto overlay por cada artículo; varios pines por artículo.</li>
+  <li>Tableros por categoría con keywords ("centros de mesa boda", "peinados de novia").</li>
+  <li>Constancia: 5-15 pines/día con programador; horizonte de resultados ~12 meses.</li>
+  <li>Prioriza los artículos virales (Parte 3.2) y todo lo DIY con fotos propias.</li>
+</ul>
+
+<h3>SEO (Google) — el motor de fondo</h3>
+<ul class="clean">
+  <li>Atacar cola larga informacional donde los portales son débiles.</li>
+  <li>Completar clusters enteros (pilar + spokes) antes de saltar de tema.</li>
+  <li>Revisión mensual "striking distance" (posiciones 8-20) en Search Console.</li>
+</ul>
+
+<h3>Email — el activo que posees</h3>
+<ul class="clean">
+  <li><b>Lead magnet</b>: checklist de boda + Excel de presupuesto (descarga a cambio del email).</li>
+  <li>Secuencia de bienvenida por fases de la organización (12 meses → día D).</li>
+  <li>La lista trae tráfico recurrente (más impresiones) y monetiza afiliación.</li>
+</ul>
+
+<h3>Otros</h3>
+<ul class="clean">
+  <li><b>Instagram/TikTok/YouTube</b>: DIY en vídeo, "planifica conmigo", tendencias → marca y tráfico.</li>
+  <li><b>Google Discover</b>: el contenido visual y de tendencia puede explotar.</li>
+</ul>
+
+<h3>Calendario por fases</h3>
+<table>
+  <tr><th>Fase</th><th>Meses</th><th>Foco</th></tr>
+  <tr><td>0 · Fundación</td><td>0-1</td><td>Identidad + legales + 25 artículos base (mezcla clusters) + Pinterest montado</td></tr>
+  <tr><td>1 · Aprobación + tracción</td><td>1-4</td><td>Solicitar AdSense; completar 2-3 clusters; primeros pines</td></tr>
+  <tr><td>2 · Autoridad</td><td>4-12</td><td>Clusters completos, enlazado, email, striking distance</td></tr>
+  <tr><td>3 · Escala</td><td>12-24</td><td>Expansión a 300+, afiliación fuerte, valorar salto a MCM</td></tr>
+</table>
+</div>
+
+<!-- ============ PARTE 4 AUDITORIA ============ -->
+<div class="part-head">
+  <div class="part-kicker">Parte 4</div>
+  <h2>Auditoría del plan (y mejoras aplicadas)</h2>
+</div>
+<p class="lead">Auto-crítica honesta del plan anterior, con los puntos débiles detectados y las correcciones
+incorporadas. Un plan sin auditar es una lista de deseos.</p>
+
+<h3>4.1 · Debilidades detectadas y correcciones</h3>
+<table>
+  <tr><th>#</th><th>Debilidad del plan base</th><th>Riesgo</th><th>Corrección aplicada</th></tr>
+  <tr><td>1</td><td>Competir con Bodas.net (autoridad 65) en keywords de venue/proveedor</td><td>Alto: no rankear nunca</td><td>Reorientar a cola larga informacional + guía del invitado + DIY; venues solo por guías y localización</td></tr>
+  <tr><td>2</td><td>Datos del Excel "bucketizados" (5000/500/50) poco fiables como volumen exacto</td><td>Medio: priorización errónea</td><td>Usar el Excel para <b>temas</b>, no para volumen literal; validar con Search Console real tras publicar</td></tr>
+  <tr><td>3</td><td>Muchas keywords del Excel son marcas de fincas concretas</td><td>Bajo: contenido irrelevante</td><td>Excluidas del plan editorial; solo inspiran series locales</td></tr>
+  <tr><td>4</td><td>RPM de AdSense en bodas es medio (4-10 €)</td><td>Medio: ingresos bajos si solo AdSense</td><td>Diversificar desde el inicio: afiliación + leads + infoproducto (checklist premium)</td></tr>
+  <tr><td>5</td><td>Riesgo de copyright de imágenes (la única política que se roza)</td><td>Alto: suspensión</td><td>Norma estricta: solo fotos propias o con licencia clara; documentar origen</td></tr>
+  <tr><td>6</td><td>Estacionalidad (picos primavera-verano, sept.)</td><td>Medio: ingresos irregulares</td><td>Priorizar contenido "planificación" (se busca todo el año) + invitados + aniversarios (evergreen)</td></tr>
+  <tr><td>7</td><td>Contenido DIY sin experiencia real = genérico</td><td>Medio: E-E-A-T débil</td><td>Todo DIY con fotos y pruebas propias; caja de autor real (Parte 1)</td></tr>
+  <tr><td>8</td><td>Dependencia excesiva de Pinterest</td><td>Medio: algoritmo ajeno</td><td>Equilibrar Pinterest + SEO + email (activo propio)</td></tr>
+  <tr><td>9</td><td>Publicar en masa sin control de calidad</td><td>Alto: "low value" → rechazo</td><td>Ritmo sostenible; cada artículo con estándar E-E-A-T; nada de IA sin revisar</td></tr>
+</table>
+
+<h3>4.2 · Auditoría de cumplimiento AdSense del plan</h3>
+<table class="score">
+  <tr><th>Criterio de política</th><th>¿El plan lo cumple?</th></tr>
+  <tr><td>Nicho permitido (no-YMYL, family-safe)</td><td>Sí ✔</td></tr>
+  <tr><td>Contenido original con valor (E-E-A-T)</td><td>Sí ✔ (Parte 1 + fotos propias)</td></tr>
+  <tr><td>Páginas legales completas</td><td>Sí ✔ (Parte 2)</td></tr>
+  <tr><td>Consentimiento de cookies (CMP/UE)</td><td>Sí ✔</td></tr>
+  <tr><td>Sin copyright infringido</td><td>Condicionado ⚠ (norma de imágenes propias)</td></tr>
+  <tr><td>Sin incentivar clics / tráfico inválido</td><td>Sí ✔ (tráfico orgánico y Pinterest)</td></tr>
+  <tr><td>Densidad de anuncios razonable (post-aprobación)</td><td>Sí ✔ (Parte 3.3)</td></tr>
+</table>
+
+<h3>4.3 · Veredicto de la auditoría</h3>
+<div class="callout ok">
+  <span class="lbl">Conclusión</span>
+  <p>El plan es <b>sólido y aprobable</b>. Su mayor fortaleza es la combinación identidad real + legales
+  impecables + contenido original con fotos propias, que neutraliza el rechazo por "low value content". Su
+  mayor riesgo es la <b>competencia</b>, mitigado con la estrategia de cola larga y sub-nichos, y el
+  <b>copyright de imágenes</b>, mitigado con la norma estricta de imágenes propias. Recomendación:
+  <b>no depender de AdSense</b> —montar afiliación y email desde el día 1— y validar el volumen real con
+  Search Console en cuanto haya datos, ajustando la prioridad de clusters con hechos, no con estimaciones.</p>
+</div>
+
+<!-- ============ APENDICES ============ -->
+<div class="part-head">
+  <div class="part-kicker">Apéndices</div>
+  <h2>Checklists, KPIs y hoja de ruta</h2>
+</div>
+
+<h3>A · Checklist de lanzamiento (orden correcto)</h3>
+<ol class="check">
+  <li>Marca definida (nombre, tono, handles reservados)</li>
+  <li>Página "Sobre Nosotros" con persona real y credenciales</li>
+  <li>Las 7 páginas legales + CMP de cookies</li>
+  <li>WordPress + tema ligero + HTTPS + hosting rápido + Cloudflare</li>
+  <li>Search Console + sitemap; Core Web Vitals en verde</li>
+  <li>25 artículos base publicados (mezcla de clusters, con fotos propias)</li>
+  <li>Lead magnet (checklist + Excel) y captación de email activa</li>
+  <li>Pinterest de empresa montado con primeros pines</li>
+  <li>Solicitar AdSense con el sitio ya maduro</li>
+  <li>Afiliación integrada en contenido comercial (declarada)</li>
+</ol>
+
+<h3>B · KPIs a vigilar</h3>
+<table>
+  <tr><th>KPI</th><th>Objetivo de referencia</th></tr>
+  <tr><td>Páginas por sesión</td><td>&gt; 1,8-2,0 (enlazado interno)</td></tr>
+  <tr><td>% tráfico orgánico + Pinterest</td><td>Mayoría del total</td></tr>
+  <tr><td>Keywords en top 10</td><td>Crecimiento mensual</td></tr>
+  <tr><td>Suscriptores de email</td><td>Crecimiento constante desde el mes 1</td></tr>
+  <tr><td>% ingresos no-AdSense</td><td>Subir hacia 40-60% (afiliación/leads)</td></tr>
+  <tr><td>Core Web Vitals</td><td>LCP &lt;2,5s / INP &lt;200ms / CLS &lt;0,1</td></tr>
+</table>
+
+<h3>C · Resumen de la arquitectura</h3>
+<p><b>15 categorías → 15 guías pilar → ~185 spokes de arranque → escalable a 300+.</b> Landing con hero +
+captación de email + 15 categorías + rejilla de 12 artículos virales + señales de confianza. Tres motores de
+tráfico (Pinterest, SEO, email) y monetización diversificada (AdSense + afiliación + leads + infoproducto).</p>
+
+<div class="footer-note">
+  Plan completo de organizatuboda.blog · Documento de trabajo, septiembre 2026 · Elaborado sobre el análisis
+  de 294 keywords aportadas + investigación de mercado del sector nupcial español (Bodas.net, INE, Similarweb,
+  web.dev). Los textos legales son modelos orientativos, no asesoramiento jurídico. Complemento del Manual de
+  Google AdSense del repositorio agente-google-adsese.
+</div>
+
+</body>
+</html>
