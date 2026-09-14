@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Ajustes v2 — organizatuboda.blog</title>
+<style>
+  @page { size:A4; margin:17mm 16mm 18mm 16mm; }
+  @page :first { margin:0; }
+  *{ box-sizing:border-box; }
+  :root{
+    --ink:#241f2b; --ink2:#4a4453; --muted:#6c6675; --faint:#8b8594;
+    --gold:#a67c34; --gold-soft:#f3ead9; --gold-line:#d9c49b;
+    --plum:#5f3b57; --sage:#4f7358; --sage-soft:#e6efe8;
+    --crit:#a8412f; --crit-soft:#f6e5e0; --line:#e4e0e8; --bg:#fff; --panel:#faf8fb;
+  }
+  html,body{ margin:0; padding:0; }
+  body{ font-family:"Helvetica Neue",Arial,sans-serif; color:var(--ink); font-size:10.6pt; line-height:1.5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2,h3,h4{ font-family:Georgia,"Times New Roman",serif; line-height:1.15; }
+  p{ margin:0 0 8px; color:var(--ink2); }
+  .mono{ font-family:"SF Mono",Consolas,monospace; }
+  code{ background:var(--panel); padding:1px 5px; border-radius:3px; font-family:"SF Mono",Consolas,monospace; font-size:9pt; color:var(--plum); }
+
+  .cover{ height:297mm; width:210mm; background:linear-gradient(160deg,#2c2233,#4a2f47 55%,#5f3b57);
+    color:#fff; padding:34mm 24mm; page-break-after:always; display:flex; flex-direction:column;
+    print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .cover .kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.3em; text-transform:uppercase; font-size:9pt; color:var(--gold-line); }
+  .cover h1{ color:#fff; font-size:38pt; line-height:1.05; margin:14px 0 8px; }
+  .cover .rule{ width:64px; height:3px; background:var(--gold); margin:22px 0; }
+  .cover .sub{ font-size:12pt; color:#e8dfe6; max-width:120mm; line-height:1.55; }
+  .cover .meta{ margin-top:auto; font-size:9.3pt; color:#cbbfc8; font-family:"SF Mono",Consolas,monospace; }
+  .cover .tag{ display:inline-block; border:1px solid rgba(255,255,255,.35); border-radius:40px; padding:5px 14px;
+    font-family:"SF Mono",Consolas,monospace; font-size:8.5pt; letter-spacing:.12em; text-transform:uppercase; color:#fff; margin:4px 6px 0 0; }
+
+  .part-head{ page-break-before:always; border-top:3px solid var(--gold); padding-top:10px; margin-top:6px; }
+  .first{ page-break-before:avoid; }
+  .part-kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.24em; text-transform:uppercase; font-size:8.5pt; color:var(--gold); }
+  h2{ font-size:20pt; margin:6px 0 4px; color:var(--ink); }
+  h3{ font-size:13.5pt; margin:18px 0 6px; color:var(--plum); }
+  h4{ font-size:11pt; margin:12px 0 4px; }
+  .lead{ font-size:11.2pt; color:var(--muted); margin-bottom:6px; }
+
+  table{ width:100%; border-collapse:collapse; margin:10px 0 14px; font-size:9.4pt; }
+  th,td{ text-align:left; padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--panel); font-family:"SF Mono",Consolas,monospace; font-size:7.8pt; text-transform:uppercase;
+    letter-spacing:.07em; color:var(--muted); border-bottom:1.5px solid var(--gold-line); }
+  tr{ page-break-inside:avoid; }
+  td.tnum{ font-family:"SF Mono",Consolas,monospace; }
+
+  .callout{ border:1px solid var(--line); border-left:4px solid var(--gold); background:var(--gold-soft);
+    padding:11px 14px; border-radius:5px; margin:12px 0; page-break-inside:avoid; }
+  .callout.warn{ border-left-color:var(--crit); background:var(--crit-soft); }
+  .callout.ok{ border-left-color:var(--sage); background:var(--sage-soft); }
+  .callout .lbl{ font-family:"SF Mono",Consolas,monospace; font-size:8pt; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--gold); font-weight:700; display:block; margin-bottom:3px; }
+  .callout.warn .lbl{ color:var(--crit); } .callout.ok .lbl{ color:var(--sage); }
+  .callout p:last-child{ margin-bottom:0; }
+  ul.clean{ margin:6px 0; padding-left:18px; } ul.clean li{ padding:2px 0; color:var(--ink2); }
+
+  .rank{ display:flex; align-items:flex-start; gap:12px; border:1px solid var(--line); border-radius:8px;
+    padding:10px 13px; margin:9px 0; page-break-inside:avoid; }
+  .rank .badge{ font-family:Georgia,serif; font-size:17pt; color:#fff; background:var(--plum); border-radius:7px;
+    min-width:34px; height:34px; display:flex; align-items:center; justify-content:center; flex-shrink:0;
+    print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .rank.t1 .badge{ background:var(--sage); } .rank.t2 .badge{ background:var(--gold); } .rank.t3 .badge{ background:var(--plum); }
+  .rank .body{ flex:1; }
+  .rank .cat{ font-family:Georgia,serif; font-size:12.5pt; color:var(--ink); font-weight:700; }
+  .rank .why{ font-size:9.3pt; color:var(--muted); margin:2px 0 4px; }
+  .rank .first-art{ font-size:9.5pt; color:var(--ink2); }
+  .rank .first-art b{ color:var(--gold); font-family:"SF Mono",Consolas,monospace; font-size:7.6pt; letter-spacing:.08em; text-transform:uppercase; }
+  .tier-lbl{ font-family:"SF Mono",Consolas,monospace; font-size:8pt; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--sage); margin:16px 0 2px; font-weight:700; }
+
+  ol.roadmap{ counter-reset:rm; list-style:none; padding:0; margin:8px 0; }
+  ol.roadmap li{ counter-increment:rm; padding:5px 0 5px 30px; position:relative; border-bottom:1px dotted var(--line); font-size:9.7pt; }
+  ol.roadmap li::before{ content:counter(rm); position:absolute; left:0; top:5px; font-family:"SF Mono",Consolas,monospace;
+    font-size:8.5pt; color:#fff; background:var(--gold); width:19px; height:19px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  ol.roadmap li .c{ font-family:"SF Mono",Consolas,monospace; font-size:7.4pt; color:var(--muted); text-transform:uppercase; letter-spacing:.06em; }
+  .footer-note{ margin-top:24px; padding-top:10px; border-top:1px solid var(--line); font-size:8.3pt; color:var(--faint); }
+  .old{ color:var(--faint); text-decoration:line-through; }
+  .arrow{ color:var(--gold); font-weight:700; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Ajustes v2 · Complemento del Plan Completo</div>
+  <h1>Estándar editorial,<br>categorías definitivas y<br>orden de publicación</h1>
+  <div class="rule"></div>
+  <p class="sub">Tres correcciones aplicadas sobre datos reales de tus 294 keywords: cada artículo con
+  fecha y autor, categorías consolidadas para no confundir el posicionamiento, y el orden exacto de
+  publicación por viralidad —lo más potente primero.</p>
+  <div>
+    <span class="tag">organizatuboda.blog</span>
+    <span class="tag">Basado en tu Excel</span>
+    <span class="tag">WordPress</span>
+  </div>
+  <div class="meta">Documento v2 · Septiembre 2026 · Fundamentado en el análisis de las 294 keywords aportadas<br>
+  Sustituye a la Parte 3.1 del Plan Completo en lo relativo a categorías y prioridad</div>
+</div>
+
+<!-- 0 -->
+<div class="part-head first">
+  <div class="part-kicker">Punto de partida</div>
+  <h2>Confirmado: he leído tus datos</h2>
+</div>
+<p class="lead">Antes de nada, la prueba de que el plan se basa en tu Excel real y no en estimaciones genéricas.</p>
+<table>
+  <tr><th>Dato de tu archivo</th><th>Valor</th></tr>
+  <tr><td>Keywords analizadas</td><td class="tnum">294</td></tr>
+  <tr><td>Volumen agregado mensual</td><td class="tnum">~551.500 búsquedas/mes</td></tr>
+  <tr><td>Periodo de los datos</td><td>Sep 2025 – Ago 2026 (Google Keyword Planner)</td></tr>
+  <tr><td>Mayor oportunidad de baja competencia</td><td>"fotomatón / fotomatones" (~110.000, comp. BAJA)</td></tr>
+  <tr><td>Mayor cluster comercial</td><td>"detalles de boda" y variantes (~56.000, comp. ALTA)</td></tr>
+  <tr><td>Caso de canibalización detectado</td><td>"detalles de boda" en 11 variantes casi idénticas (~28.000 sumadas)</td></tr>
+</table>
+<div class="callout">
+  <span class="lbl">Aviso honesto sobre estos datos</span>
+  <p>Google entrega el volumen en <b>rangos "bucketizados"</b> (50.000 / 5.000 / 500 / 50), no cifras exactas,
+  y tu export incluye muchas <b>marcas de fincas/proveedores</b> ("finca comassema", "viñedos rhey", "atelier
+  de bodas") que no sirven como temas propios. Por eso uso tu Excel para decidir <b>qué temas y en qué orden</b>,
+  y validaremos el volumen real con Search Console en cuanto la web tenga datos. Es lo correcto: priorizar con
+  hechos, ajustar con más hechos.</p>
+</div>
+
+<!-- 1 ESTANDAR EDITORIAL -->
+<div class="part-head">
+  <div class="part-kicker">Corrección 1</div>
+  <h2>Estándar editorial: fecha + autor en CADA artículo</h2>
+</div>
+<p class="lead">Regla obligatoria y sin excepciones. Es señal directa de E-E-A-T y de confianza para AdSense y
+para el lector.</p>
+
+<h3>La regla</h3>
+<p>Todo artículo debe mostrar, de forma visible:</p>
+<ul class="clean">
+  <li><b>Fecha de publicación</b> ("Publicado el 14 de septiembre de 2026").</li>
+  <li><b>Fecha de última actualización</b> cuando se revise ("Actualizado el…"). Google premia la frescura.</li>
+  <li><b>Autor</b> con nombre real y enlace a su bio ("Por [Nombre], organizadora de bodas").</li>
+  <li><b>Caja de autor al final</b>: foto, credencial en una línea y enlace a "Sobre Nosotros" y redes.</li>
+</ul>
+
+<h3>Cómo implementarlo en WordPress</h3>
+<table>
+  <tr><th>Elemento</th><th>Cómo se hace</th></tr>
+  <tr><td>Fecha publicación + actualización</td><td>Ajuste del tema (GeneratePress/Kadence) o plugin para mostrar "modified date". Activar ambas</td></tr>
+  <tr><td>Autor visible</td><td>Perfil de usuario de WordPress completo (nombre, biografía, avatar, redes)</td></tr>
+  <tr><td>Caja de autor</td><td>Función del tema o plugin "author box" al final del post</td></tr>
+  <tr><td>Datos estructurados</td><td>Rank Math/Yoast → schema <code>Article</code> con <code>datePublished</code>, <code>dateModified</code> y <code>author</code></td></tr>
+</table>
+<div class="callout ok">
+  <span class="lbl">Por qué importa</span>
+  <p>Un artículo con autor identificado y fechas es indistinguible de una web profesional; uno sin ellos parece
+  contenido automatizado y anónimo → justo lo que dispara el rechazo por "low value content". Este estándar,
+  repetido en los cientos de artículos, construye la autoría consistente que Google lee como marca fiable.</p>
+</div>
+
+<!-- 2 CATEGORIAS -->
+<div class="part-head">
+  <div class="part-kicker">Corrección 2</div>
+  <h2>Categorías definitivas: de 15 a 8 (sin confundir el posicionamiento)</h2>
+</div>
+<p class="lead">Tenías razón: 15 categorías dispersan la autoridad y se solapan. Las consolido en 8 silos de
+<b>intención de búsqueda distinta</b>, que no compiten entre sí.</p>
+
+<h3>El verdadero problema no son las categorías, son los artículos duplicados</h3>
+<p>Lo que <b>de verdad</b> confunde a Google al posicionar es la <b>canibalización</b>: varios artículos que
+atacan la misma intención. Tu Excel es un ejemplo de manual:</p>
+<table>
+  <tr><th>Variantes en tu Excel (misma intención)</th><th>Vol. sumado</th><th>Decisión</th></tr>
+  <tr><td>detalles de boda / detalles boda / detalles para bodas / detalles de boda originales / …(11 variantes)</td><td class="tnum">~28.000</td><td class="arrow">→ 1 artículo</td></tr>
+  <tr><td>bodas en la playa / boda en la playa / boda playa / boda en playa …(5)</td><td class="tnum">~20.500</td><td class="arrow">→ 1 artículo</td></tr>
+  <tr><td>velo de novia / velo novia / velos largos / velos cortos (4)</td><td class="tnum">~11.000</td><td class="arrow">→ 1 artículo</td></tr>
+  <tr><td>marcasitios / marcasitios boda / marcasitios madera (3)</td><td class="tnum">~10.500</td><td class="arrow">→ 1 artículo</td></tr>
+  <tr><td>invitación de boda / invitación boda / invitación para boda (3)</td><td class="tnum">~10.050</td><td class="arrow">→ 1 artículo</td></tr>
+</table>
+<div class="callout warn">
+  <span class="lbl">Regla anti-canibalización</span>
+  <p><b>Una intención = un artículo.</b> Todas las variantes de una misma búsqueda se trabajan <b>dentro del
+  mismo artículo</b> (en el título, H2 y texto), nunca en artículos separados. Esto, más que reducir categorías,
+  es lo que arregla el "se confunde al posicionar".</p>
+</div>
+
+<h3>Las 8 categorías definitivas (menú del sitio)</h3>
+<table>
+  <tr><th>#</th><th>Categoría</th><th>Intención que cubre</th><th>Absorbe de las 15 antiguas</th></tr>
+  <tr><td>1</td><td><b>Organización y Presupuesto</b></td><td>Cómo organizar, checklist, cuánto cuesta, ahorrar</td><td>Organización + Presupuesto/Low cost</td></tr>
+  <tr><td>2</td><td><b>Ceremonia y Protocolo</b></td><td>Civil/religiosa, votos, madrina/padrino, discursos</td><td>Ceremonia + parte de Tipos de boda</td></tr>
+  <tr><td>3</td><td><b>Banquete y Proveedores</b></td><td>Catering, tarta, fotógrafo, fotomatón, música, lugar</td><td>Banquete + Fotografía + Lugares</td></tr>
+  <tr><td>4</td><td><b>Decoración y DIY</b></td><td>Centros de mesa, photocall, flores, manualidades</td><td>Decoración y DIY</td></tr>
+  <tr><td>5</td><td><b>Invitaciones y Papelería</b></td><td>Invitaciones, seating plan, minuta, marcasitios</td><td>Invitaciones y papelería</td></tr>
+  <tr><td>6</td><td><b>Detalles y Regalos</b></td><td>Detalles para invitados, candy bar, regalos</td><td>Detalles y regalos</td></tr>
+  <tr><td>7</td><td><b>Moda y Belleza</b></td><td>Vestido novia, traje novio, belleza, looks de invitada</td><td>La Novia + El Novio + Los Invitados</td></tr>
+  <tr><td>8</td><td><b>Aniversarios de Boda</b></td><td>Bodas de oro/plata/papel, regalos por años</td><td>Aniversarios</td></tr>
+</table>
+<div class="callout">
+  <span class="lbl">"Tipos de boda" no es categoría, es transversal</span>
+  <p>Boda en la playa, civil, íntima, temática… atraviesan varias categorías. Se gestionan como <b>etiquetas
+  (tags)</b> y dentro de las guías, no como una categoría propia. Así evitas que "boda civil" compita consigo
+  misma entre la categoría "Tipos" y la categoría "Ceremonia".</p>
+</div>
+
+<!-- 3 ORDEN -->
+<div class="part-head">
+  <div class="part-kicker">Corrección 3</div>
+  <h2>Orden de publicación por viralidad</h2>
+</div>
+<p class="lead">Qué categorías atacar primero y, dentro de cada una, el artículo más potente antes que nada.
+Priorizado con tus datos: <b>volumen alto × competencia baja × compartibilidad × seguridad de aprobación</b>.</p>
+
+<div class="tier-lbl">■ Tier 1 — Empieza aquí (ganancia rápida: alto volumen + baja competencia)</div>
+
+<div class="rank t1">
+  <div class="badge">1</div>
+  <div class="body">
+    <div class="cat">Aniversarios de Boda</div>
+    <div class="why">~37.000 búsq/mes en tus datos, competencia BAJA, evergreen y muy compartible. Es la vía más
+    rápida a las primeras posiciones y da impulso para la aprobación.</div>
+    <div class="first-art"><b>Primer artículo</b> · "Tabla de aniversarios de boda año por año" + "Bodas de oro (50 años): ideas y regalos" (~11.000 agrupado)</div>
+  </div>
+</div>
+
+<div class="rank t1">
+  <div class="badge">2</div>
+  <div class="body">
+    <div class="cat">Banquete y Proveedores</div>
+    <div class="why">Contiene la mayor joya de tu Excel: <b>"fotomatón" (~110.000, competencia BAJA)</b>. Un solo
+    cluster puede traer tráfico enorme con poca pelea.</div>
+    <div class="first-art"><b>Primer artículo</b> · "Fotomatón para bodas: precios, tipos y cómo hacer uno casero" (~110.000)</div>
+  </div>
+</div>
+
+<div class="rank t1">
+  <div class="badge">3</div>
+  <div class="body">
+    <div class="cat">Ceremonia y Protocolo</div>
+    <div class="why">"Boda civil / matrimonio civil" y "madrina de boda" tienen volumen alto y competencia baja.
+    Sub-nichos donde los portales grandes son débiles.</div>
+    <div class="first-art"><b>Primer artículo</b> · "Boda civil paso a paso: trámites, requisitos y guion" · luego "Cómo escribir tus votos"</div>
+  </div>
+</div>
+
+<div class="tier-lbl" style="color:var(--gold)">■ Tier 2 — Alta compartibilidad y afiliación (el motor de Pinterest y de ingresos)</div>
+
+<div class="rank t2">
+  <div class="badge">4</div>
+  <div class="body">
+    <div class="cat">Detalles y Regalos</div>
+    <div class="why">~56.000 búsq/mes. Competencia ALTA (comercial) pero altísima compartibilidad + afiliación.
+    Recuerda: una intención, un artículo (los 11 "detalles de boda" van juntos).</div>
+    <div class="first-art"><b>Primer artículo</b> · "Detalles de boda originales, útiles y baratos" (~28.000 agrupado)</div>
+  </div>
+</div>
+
+<div class="rank t2">
+  <div class="badge">5</div>
+  <div class="body">
+    <div class="cat">Decoración y DIY</div>
+    <div class="why">El motor de Pinterest. Con fotos propias garantizas originalidad (aprobación) y guardados.</div>
+    <div class="first-art"><b>Primer artículo</b> · "Centros de mesa DIY: 30 ideas (con fotos propias)"</div>
+  </div>
+</div>
+
+<div class="rank t2">
+  <div class="badge">6</div>
+  <div class="body">
+    <div class="cat">Moda y Belleza (novios e invitados)</div>
+    <div class="why">Volumen altísimo ("vestida de novia" ~50k, "velo" ~11k) y "cuánto se regala / vestido de
+    invitada" atrae al enorme público de invitados. Más competido: por eso va en Tier 2.</div>
+    <div class="first-art"><b>Primer artículo</b> · "Cuánto se regala en una boda en 2026" · luego "Velo de novia: tipos y cómo elegirlo"</div>
+  </div>
+</div>
+
+<div class="tier-lbl" style="color:var(--plum)">■ Tier 3 — Base de marca y consolidación (evergreen, imprescindibles)</div>
+
+<div class="rank t3">
+  <div class="badge">7</div>
+  <div class="body">
+    <div class="cat">Organización y Presupuesto</div>
+    <div class="why">Es el núcleo de la marca (el dominio lo dice) y la fuente de los <b>lead magnets</b>
+    (checklist + Excel). Volumen más bajo pero se busca todo el año y sostiene el email. Publica 2-3 piezas
+    ancla desde el principio por coherencia y aprobación, y amplía en esta fase.</div>
+    <div class="first-art"><b>Primer artículo</b> · "Cómo organizar una boda paso a paso" + "Checklist descargable"</div>
+  </div>
+</div>
+
+<div class="rank t3">
+  <div class="badge">8</div>
+  <div class="body">
+    <div class="cat">Invitaciones y Papelería</div>
+    <div class="why">Comercial + DIY. "Invitación de boda" (~10k agrupado) y "seating plan" son imanes útiles.
+    Consolida el sitio y aporta afiliación.</div>
+    <div class="first-art"><b>Primer artículo</b> · "Invitaciones de boda: textos, tipos y dónde comprarlas" · luego "Seating plan sin volverte loco"</div>
+  </div>
+</div>
+
+<div class="callout ok">
+  <span class="lbl">La lógica en una frase</span>
+  <p>Primero lo que se gana rápido y da impulso (Tier 1: aniversarios, fotomatón, boda civil), luego lo que
+  explota en Pinterest y monetiza (Tier 2: detalles, decoración, moda), y en paralelo la base de marca que
+  sostiene el email y la autoridad (Tier 3: organización, papelería). <b>Lo más potente, primero.</b></p>
+</div>
+
+<!-- ROADMAP -->
+<div class="part-head">
+  <div class="part-kicker">Ejecución</div>
+  <h2>Los primeros 25 artículos, en orden exacto</h2>
+</div>
+<p class="lead">Una secuencia concreta que mezcla ganancia rápida (Tier 1) con 2-3 anclas de marca para la
+coherencia y la aprobación. Publica de arriba abajo.</p>
+
+<ol class="roadmap">
+  <li><span class="c">[Organización]</span> Cómo organizar una boda paso a paso <i>(ancla de marca + pilar)</i></li>
+  <li><span class="c">[Organización]</span> Checklist de boda mes a mes <i>(lead magnet descargable)</i></li>
+  <li><span class="c">[Aniversarios]</span> Tabla de aniversarios de boda año por año</li>
+  <li><span class="c">[Aniversarios]</span> Bodas de oro (50 años): ideas para celebrarlas y regalos</li>
+  <li><span class="c">[Banquete/Prov.]</span> Fotomatón para bodas: precios, tipos y alternativas</li>
+  <li><span class="c">[Banquete/Prov.]</span> Cómo hacer un fotomatón casero para tu boda</li>
+  <li><span class="c">[Ceremonia]</span> Boda civil paso a paso: trámites, requisitos y guion</li>
+  <li><span class="c">[Aniversarios]</span> Bodas de plata (25 años): ideas y regalos</li>
+  <li><span class="c">[Detalles]</span> Detalles de boda originales, útiles y baratos (&lt;3 €)</li>
+  <li><span class="c">[Presupuesto]</span> Cuánto cuesta una boda en España en 2026 (desglose)</li>
+  <li><span class="c">[Ceremonia]</span> Cómo escribir tus votos de boda (con ejemplos)</li>
+  <li><span class="c">[Decoración]</span> Centros de mesa DIY: 30 ideas con fotos propias</li>
+  <li><span class="c">[Moda/Invitado]</span> Cuánto dinero se regala en una boda en 2026</li>
+  <li><span class="c">[Ceremonia]</span> Madrina de boda: funciones y protocolo</li>
+  <li><span class="c">[Presupuesto]</span> Cómo ahorrar en tu boda: 30 trucos reales</li>
+  <li><span class="c">[Banquete/Prov.]</span> Tarta de boda: tendencias, sabores y precio</li>
+  <li><span class="c">[Aniversarios]</span> Bodas de papel (1 año): qué regalar</li>
+  <li><span class="c">[Decoración]</span> Photocall de boda: ideas DIY y atrezzo</li>
+  <li><span class="c">[Invitaciones]</span> Invitaciones de boda: textos, tipos y dónde comprarlas</li>
+  <li><span class="c">[Moda/Invitado]</span> Vestidos de invitada de día: 40 looks</li>
+  <li><span class="c">[Ceremonia]</span> Boda en la playa: guía completa para organizarla</li>
+  <li><span class="c">[Detalles]</span> Candy bar de boda: cómo montarla y qué poner</li>
+  <li><span class="c">[Invitaciones]</span> Seating plan: cómo hacerlo sin volverte loco</li>
+  <li><span class="c">[Moda]</span> Velo de novia: tipos y cómo elegirlo</li>
+  <li><span class="c">[Presupuesto]</span> Plantilla de presupuesto de boda en Excel <i>(lead magnet)</i></li>
+</ol>
+
+<div class="callout">
+  <span class="lbl">Recordatorio de calidad</span>
+  <p>Cada uno de estos 25 artículos, sin excepción: <b>una intención</b> (agrupando variantes), <b>fecha +
+  autor</b> visibles, <b>fotos propias</b> en los DIY, enlazado interno al pilar de su categoría y su pin de
+  Pinterest. Ritmo sostenible &gt; publicar en masa.</p>
+</div>
+
+<div class="footer-note">
+  Ajustes v2 · organizatuboda.blog · Septiembre 2026 · Prioridad y agrupación fundamentadas en el análisis de
+  las 294 keywords aportadas (Google Keyword Planner). Los volúmenes de Google son rangos orientativos; se
+  validarán con Search Console. Este documento actualiza la Parte 3.1 del Plan Completo.
+</div>
+
+</body>
+</html>
