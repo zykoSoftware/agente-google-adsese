@@ -136,8 +136,8 @@ Cada artículo debe demostrar **Experiencia, Pericia, Autoridad y Confianza**:
 
 - **Experiencia real y concreta:** ejemplos, cifras, "en la práctica…", pasos probados, capturas/fotos propias.
 - **Profundidad suficiente:** responder la intención **por completo**, cubrir subtemas y preguntas relacionadas
-  (People Also Ask). Longitud orientativa **900–1.800 palabras** según el tema — **nunca por debajo de ~800**
-  ni relleno para inflar.
+  (People Also Ask). La longitud **sigue a la intención**, no a un número fijo (ver el detalle por tipo de
+  artículo en la sección **⭐ Pautas para artículos irrechazables**). **Nunca** rellenar para inflar.
 - **Precisión:** datos correctos y verificables; si no se puede verificar un dato, no se afirma.
 - **Estructura clara:** encabezados lógicos, párrafos cortos, listas y tablas donde ayuden.
 - **Utilidad accionable:** el lector debe poder **hacer algo** al terminar (una checklist, una decisión, unos pasos).
@@ -146,6 +146,89 @@ Cada artículo debe demostrar **Experiencia, Pericia, Autoridad y Confianza**:
 > **Regla anti-"low value":** si el borrador se puede resumir en "información genérica que ya está en todas
 > partes", **no está terminado**. Añade experiencia, datos, ejemplos propios, tablas comparativas o un ángulo
 > único hasta que aporte valor diferencial.
+
+---
+
+## ⭐ Pautas para artículos IRRECHAZABLES
+
+> El objetivo de esta sección es que **cada artículo sea imposible de rechazar**: que Google no encuentre
+> motivo para marcarlo como "low value" ni como contenido a escala, y que el lector lo perciba como el mejor
+> resultado. No es sobre longitud: es sobre **valor demostrable**. Estas pautas son **obligatorias**.
+
+### A · Longitud correcta por tipo de artículo (olvida el "mínimo de 2500")
+
+**El número de palabras NO es un factor de aprobación ni de ranking** (Google lo ha confirmado). Forzar una
+cifra produce relleno, y el relleno es justo lo que dispara el rechazo. La longitud **sigue a la intención**:
+
+| Tipo de artículo | Longitud orientativa | Nota |
+|------------------|----------------------|------|
+| **Pilar / cornerstone** (guías madre) | **2.000 – 3.500** palabras | Cobertura total del tema. Son los que demuestran que el sitio tiene sustancia. Ten 3-4 así antes de solicitar AdSense |
+| **Spoke informacional** | **1.000 – 1.800** palabras | Responde una intención concreta por completo |
+| **Comercial / comparativa** | **1.200 – 2.200** palabras | Análisis real, tablas, criterios; no una lista de enlaces |
+| **Respuesta corta** (ej. "cuánto se regala") | **900 – 1.400** palabras | Directo; no inflar |
+
+> **Regla de oro:** escribe **todo lo que el tema necesita y ni una palabra de relleno**. Si te sobra para
+> llegar a una cifra, córtalo. Si falta para cubrir la intención, amplía con valor real.
+
+### B · Señales de originalidad OBLIGATORIAS (mínimo 2 por artículo)
+
+Esto es lo que hace un artículo "irrechazable" frente a "uno más". **Cada artículo debe incluir al menos DOS**:
+
+- 📷 **Fotos propias** (imprescindible en DIY, decoración, detalles) — imposibles de "raspar" → máxima señal de originalidad.
+- 📊 **Un dato o mini-recopilación propia** ("pedí presupuesto a 5 fincas y esto vi", tabla de precios que recopilaste).
+- 🖼️ **Infografía, esquema o captura** creada para el artículo.
+- 🗣️ **Una cita real** de un proveedor del sector (entrevista corta a wedding planner, fotógrafo, floristería) → oro para E-E-A-T.
+- 🧮 **Una herramienta o plantilla** propia (calculadora de presupuesto, checklist descargable).
+
+### C · Marcadores de experiencia real (la "E" que Google prioriza en 2026)
+
+El contenido que demuestra experiencia de primera mano supera al que resume lo de otros. Incluye, con naturalidad:
+
+- Frases de experiencia directa: *"cuando organicé…", "el error más común que he visto…", "lo probé y…"*.
+- Ejemplos y casos concretos, no genéricos.
+- Recomendaciones con criterio y justificación ("elige X **porque**…"), no "depende de tus gustos" vacío.
+
+### D · Elementos de valor añadido (al menos 2 por artículo)
+
+- ✅ **Caja de "puntos clave"** o resumen al inicio (mejora UX y aparición en resúmenes de IA).
+- ✅ **Tabla comparativa** o **lista accionable** cuando ayude a decidir.
+- ✅ **Checklist** o plantilla que el lector pueda usar.
+- ✅ **Sección FAQ** con 3-5 preguntas reales (schema FAQ) → captura "People Also Ask".
+- ✅ **Conclusión con siguiente paso** claro (qué hacer ahora).
+
+### E · Confianza, precisión y formato impecable
+
+- ✍️ **Español perfecto:** ortografía y gramática sin fallos (un error tonto resta credibilidad y E-E-A-T).
+- 🔗 **Fuentes citadas y enlazadas** para todo dato o estadística (INE, Bodas.net, estudios del sector).
+- 📅 **Autor + fecha de publicación + fecha de actualización** visibles (obligatorio, §6).
+- 📱 **Legibilidad:** párrafos cortos (2-4 líneas), encabezados claros, listas; respuesta directa arriba.
+- 🔁 **Enlazado interno** real al pilar de su categoría y a 2-3 hermanos.
+
+### F · Reglas específicas de la FASE DE APROBACIÓN
+
+Mientras la cuenta de AdSense aún no está aprobada, extrema el cuidado:
+
+- Prioriza contenido **informacional y con valor**; **modera el afiliado agresivo** (una web nueva llena de
+  enlaces de afiliado puede parecer "thin" a Google). El afiliado fuerte, después de aprobar.
+- **Nada de páginas vacías** (categorías/tags sin posts, páginas "en construcción", "hola mundo").
+- Publica **clusters completos** (pilar + varios spokes) antes que artículos sueltos → demuestra autoridad temática.
+- Verifica que los artículos están **indexados en Search Console** antes de solicitar.
+- Ten **20-25 artículos** publicados, con **3-4 pilares profundos** entre ellos.
+
+### G · Checklist "IRRECHAZABLE" (gate reforzado — se suma al §10)
+
+El agente confirma, además del gate general:
+
+- [ ] Longitud adecuada al **tipo** de artículo (sin relleno, sin quedarse corto).
+- [ ] Al menos **2 señales de originalidad** (B) presentes.
+- [ ] Al menos **1 marcador de experiencia real** (C).
+- [ ] Al menos **2 elementos de valor añadido** (D): puntos clave, tabla, checklist o FAQ.
+- [ ] Español impecable, fuentes enlazadas, autor y fechas.
+- [ ] Enlazado interno al pilar + hermanos.
+- [ ] En fase de aprobación: sin afiliado agresivo, sin páginas vacías, indexable.
+
+> **Si un artículo cumple este gate, es prácticamente irrechazable:** aporta valor único, demuestra
+> experiencia, está bien formateado y no da a Google ningún motivo para marcarlo como bajo valor o spam.
 
 ---
 
