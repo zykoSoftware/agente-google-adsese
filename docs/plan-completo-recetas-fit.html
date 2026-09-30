@@ -1,0 +1,524 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Plan Completo — Recetas Fit / Cocina saludable</title>
+<style>
+  @page{ size:A4; margin:16mm 15mm 17mm 15mm; }
+  @page :first{ margin:0; }
+  *{ box-sizing:border-box; }
+  :root{
+    --ink:#1c2422; --ink2:#3a4442; --muted:#5c6663; --faint:#899290;
+    --teal:#17605a; --teal-soft:#e2efec; --teal-line:#b4d4ce;
+    --coral:#c9552f; --coral-soft:#f8e7df; --coral-line:#e8bda9;
+    --olive:#6b7a2e; --olive-soft:#eef0dd;
+    --line:#e3e6e4; --bg:#fff; --panel:#f6f8f7;
+  }
+  html,body{ margin:0; padding:0; }
+  body{ font-family:"Helvetica Neue",Arial,sans-serif; color:var(--ink); font-size:10.3pt; line-height:1.48;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2,h3,h4{ font-family:Georgia,"Times New Roman",serif; line-height:1.15; color:var(--ink); }
+  p{ margin:0 0 7px; color:var(--ink2); }
+  .mono{ font-family:"SF Mono",Consolas,monospace; }
+  code{ background:var(--panel); padding:1px 5px; border-radius:3px; font-family:"SF Mono",Consolas,monospace; font-size:8.8pt; color:var(--teal); }
+
+  .cover{ height:297mm; width:210mm; background:linear-gradient(160deg,#0f2b28,#134a44 55%,#17605a);
+    color:#fff; padding:33mm 24mm; page-break-after:always; display:flex; flex-direction:column;
+    print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .cover .kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.28em; text-transform:uppercase; font-size:9pt; color:var(--coral-line); }
+  .cover h1{ color:#fff; font-size:39pt; line-height:1.04; margin:14px 0 8px; }
+  .cover .rule{ width:64px; height:3px; background:var(--coral); margin:22px 0; }
+  .cover .sub{ font-size:12pt; color:#dbeae7; max-width:124mm; line-height:1.55; }
+  .cover .tag{ display:inline-block; border:1px solid rgba(255,255,255,.35); border-radius:40px; padding:5px 13px;
+    font-family:"SF Mono",Consolas,monospace; font-size:8.3pt; letter-spacing:.11em; text-transform:uppercase; color:#fff; margin:4px 6px 0 0; }
+  .cover .meta{ margin-top:auto; font-size:9.2pt; color:#afc4c0; font-family:"SF Mono",Consolas,monospace; }
+
+  .part-head{ page-break-before:always; border-top:3px solid var(--coral); padding-top:10px; margin-top:6px; }
+  .first{ page-break-before:avoid; }
+  .part-kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.22em; text-transform:uppercase; font-size:8.4pt; color:var(--coral); }
+  h2{ font-size:19pt; margin:6px 0 4px; }
+  h3{ font-size:13pt; margin:16px 0 5px; color:var(--teal); }
+  h4{ font-size:10.8pt; margin:11px 0 4px; }
+  .lead{ font-size:11pt; color:var(--muted); margin-bottom:6px; }
+
+  table{ width:100%; border-collapse:collapse; margin:9px 0 13px; font-size:9.2pt; }
+  th,td{ text-align:left; padding:6px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--panel); font-family:"SF Mono",Consolas,monospace; font-size:7.6pt; text-transform:uppercase;
+    letter-spacing:.06em; color:var(--muted); border-bottom:1.5px solid var(--teal-line); }
+  tr{ page-break-inside:avoid; }
+  td.tnum{ font-family:"SF Mono",Consolas,monospace; }
+  .score td:last-child{ font-family:"SF Mono",Consolas,monospace; font-weight:700; }
+
+  .callout{ border:1px solid var(--line); border-left:4px solid var(--coral); background:var(--coral-soft);
+    padding:10px 13px; border-radius:5px; margin:11px 0; page-break-inside:avoid; }
+  .callout.warn{ border-left-color:#a8412f; background:#f6e5df; }
+  .callout.ok{ border-left-color:var(--teal); background:var(--teal-soft); }
+  .callout .lbl{ font-family:"SF Mono",Consolas,monospace; font-size:7.8pt; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--coral); font-weight:700; display:block; margin-bottom:3px; }
+  .callout.ok .lbl{ color:var(--teal); }
+  .callout p:last-child{ margin-bottom:0; }
+  ul.clean{ margin:5px 0; padding-left:18px; } ul.clean li{ padding:1.5px 0; color:var(--ink2); }
+  ol.check{ padding-left:0; } .check li{ list-style:none; padding:3px 0 3px 22px; position:relative; color:var(--ink2); }
+  .check li::before{ content:"☐"; position:absolute; left:0; color:var(--coral); font-size:11pt; }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:9px; }
+  .stat{ border:1px solid var(--line); border-radius:6px; padding:9px 12px; background:var(--panel); }
+  .stat .n{ font-family:Georgia,serif; font-size:16pt; color:var(--teal); }
+  .stat .l{ font-size:8.4pt; color:var(--muted); }
+
+  .cat{ border:1px solid var(--line); border-radius:8px; padding:11px 13px; margin:10px 0; page-break-inside:avoid; }
+  .cat .h{ display:flex; justify-content:space-between; align-items:baseline; gap:8px; border-bottom:1px solid var(--line); padding-bottom:5px; margin-bottom:6px; }
+  .cat .name{ font-family:Georgia,serif; font-size:12.5pt; color:var(--teal); font-weight:700; }
+  .cat .tier{ font-family:"SF Mono",Consolas,monospace; font-size:7.2pt; letter-spacing:.06em; text-transform:uppercase; padding:2px 7px; border-radius:20px; white-space:nowrap; }
+  .tierA{ background:var(--coral-soft); color:var(--coral); } .tierB{ background:var(--teal-soft); color:var(--teal); } .tierC{ background:var(--olive-soft); color:var(--olive); }
+  .cat .pillar{ font-size:9.4pt; background:var(--teal-soft); border-radius:4px; padding:4px 8px; margin-bottom:5px; }
+  .cat .pillar b{ font-family:"SF Mono",Consolas,monospace; font-size:7.2pt; letter-spacing:.08em; text-transform:uppercase; color:var(--teal); }
+  .cat ol{ margin:3px 0 0; padding-left:20px; columns:1; } .cat li{ font-size:9.4pt; padding:1.3px 0; color:var(--ink2); }
+  .hot{ display:inline-block; background:var(--coral); color:#fff; font-family:"SF Mono",Consolas,monospace; font-size:6.4pt; letter-spacing:.05em; padding:1px 4px; border-radius:3px; vertical-align:middle; margin-left:4px; text-transform:uppercase; print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+
+  .footer-note{ margin-top:22px; padding-top:9px; border-top:1px solid var(--line); font-size:8.2pt; color:var(--faint); }
+  .toc ol{ list-style:none; padding:0; margin:12px 0 0; counter-reset:t; }
+  .toc li{ display:flex; justify-content:space-between; padding:6px 0; border-bottom:1px dotted var(--line); counter-increment:t; }
+  .toc .t::before{ content:counter(t) ".  "; color:var(--coral); font-family:"SF Mono",Consolas,monospace; }
+  .toc .t{ font-weight:600; color:var(--ink); } .toc small{ color:var(--muted); }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Plan completo · Nicho · SEO · Aprobación AdSense</div>
+  <h1>Recetas Fit:<br>cocina saludable,<br>proteica y ligera</h1>
+  <div class="rule"></div>
+  <p class="sub">Estrategia integral para un blog de recetas bajas en calorías, nutritivas y altas en proteína:
+  nicho, presentación de la web, keywords por prioridad, 9 categorías y +100 títulos de artículos ordenados por
+  potencia SEO. Todo pensado para aprobar AdSense y crecer.</p>
+  <div>
+    <span class="tag">Mercado España</span>
+    <span class="tag">Enfoque cocina (no dieta)</span>
+    <span class="tag">WordPress</span>
+  </div>
+  <div class="meta">Plan de trabajo · Septiembre 2026 · Investigación de tendencias del sector (air fryer, proteico, meal prep)<br>
+  Nombre de trabajo: CocinaFit (a confirmar) · Repositorio agente-google-adsese</div>
+</div>
+
+<!-- INDICE -->
+<div class="toc">
+  <div class="part-kicker">Contenido</div>
+  <h2>Índice</h2>
+  <ol>
+    <li><span class="t">Resumen ejecutivo</span><small>La estrategia en una página</small></li>
+    <li><span class="t">El nicho y su seguridad para AdSense</span><small>Scorecard + guardarraíles YMYL</small></li>
+    <li><span class="t">Presentación de la web (identidad y marca)</span><small>Nombre, tono, Sobre Nosotros</small></li>
+    <li><span class="t">Estrategia de aprobación</span><small>Cómo aprobar seguro</small></li>
+    <li><span class="t">Keywords por prioridad</span><small>De las más potentes a las de soporte</small></li>
+    <li><span class="t">Categorías de la web</span><small>9 silos derivados de las keywords</small></li>
+    <li><span class="t">+100 títulos de artículos</span><small>Organizados y priorizados por SEO</small></li>
+    <li><span class="t">Estrategia SEO de artículos</span><small>Clusters, on-page y orden de publicación</small></li>
+    <li><span class="t">Estrategia de tráfico</span><small>Pinterest, SEO y email</small></li>
+  </ol>
+</div>
+
+<!-- 1 RESUMEN -->
+<div class="part-head">
+  <div class="part-kicker">Resumen ejecutivo</div>
+  <h2>La estrategia en una página</h2>
+</div>
+<p class="lead">Un blog de <b>cocina saludable, proteica y baja en calorías</b> — no de dietas ni salud — para
+aprovechar una de las mayores tendencias actuales con un enfoque <b>aprobable</b> por AdSense.</p>
+<div class="grid2">
+  <div class="stat"><div class="n">9</div><div class="l">categorías / silos temáticos</div></div>
+  <div class="stat"><div class="n">100+</div><div class="l">títulos de artículos priorizados</div></div>
+  <div class="stat"><div class="n">Air fryer</div><div class="l">la mayor tendencia del nicho ahora mismo</div></div>
+  <div class="stat"><div class="n">~9/10</div><div class="l">aprobación (con el framing correcto)</div></div>
+</div>
+<h4>Las 5 decisiones estratégicas</h4>
+<ol class="clean">
+  <li><b>Framing de "cocina", no de "dieta".</b> Recetas ricas, proteicas y ligeras — nunca claims de salud o
+  pérdida de peso. Esto te mantiene fuera del YMYL y aprobable.</li>
+  <li><b>Especialización.</b> "Recetas fit/proteicas" tiene menos competencia que "recetas" a secas y mejor monetización.</li>
+  <li><b>Fotos propias siempre.</b> Es lo que blinda la aprobación en el nicho de recetas (originalidad).</li>
+  <li><b>Prioridad por tendencia.</b> Empezar por lo más potente y de moda: air fryer, avena/desayunos proteicos, cenas ligeras, postres fit.</li>
+  <li><b>Monetización diversificada.</b> AdSense (suelo) + afiliación de utensilios (air fryer, robots, táperes) + infoproductos (recetarios, planes).</li>
+</ol>
+<div class="callout warn">
+  <span class="lbl">Nota sobre los datos</span>
+  <p>Este plan se basa en <b>investigación de tendencias</b> del sector (no en un export de Keyword Planner). Los
+  volúmenes exactos deben <b>validarse con Keyword Planner y Search Console</b> antes/después de publicar. La
+  priorización usa señales reales de demanda y tendencia, pero se ajustará con datos propios.</p>
+</div>
+
+<!-- 2 NICHO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 1</div>
+  <h2>El nicho y su seguridad para AdSense</h2>
+</div>
+<table class="score">
+  <tr><th>Criterio</th><th>Comentario</th><th>Nota</th></tr>
+  <tr><td>Aprobación (con framing de cocina)</td><td>Aprobable; fotos propias = originalidad</td><td>9/10</td></tr>
+  <tr><td>Cumplimiento de políticas</td><td>Seguro si se evitan claims de salud/dieta (ver guardarraíles)</td><td>8,5/10</td></tr>
+  <tr><td>Tendencia de mercado</td><td>Altísima (proteico, air fryer, meal prep en auge)</td><td>9,5/10</td></tr>
+  <tr><td>Tráfico (SEO + Pinterest)</td><td>Recetas = rey de Pinterest; enorme volumen</td><td>9,5/10</td></tr>
+  <tr><td>Competencia</td><td>Menor que "recetas" genérico; media en fit</td><td>6,5/10</td></tr>
+  <tr><td>RPM</td><td>Mejor que recetas de entretenimiento; medio</td><td>6,5/10</td></tr>
+  <tr><td>Monetización (afiliación utensilios)</td><td>Fuerte: air fryer, robots, táperes, básculas</td><td>8,5/10</td></tr>
+</table>
+<h3>Guardarraíles para que sea SEGURO (framing cocina, no dieta)</h3>
+<table>
+  <tr><th>✅ Enfoque seguro (cocina)</th><th>🚫 Enfoque de riesgo (YMYL)</th></tr>
+  <tr><td>"Receta proteica baja en calorías"</td><td>"Receta para adelgazar / quemar grasa"</td></tr>
+  <tr><td>Info nutricional como dato ("30 g de proteína")</td><td>Promesas de salud o pérdida de peso</td></tr>
+  <tr><td>Proteína en polvo como ingrediente ocasional</td><td>Suplementos como protagonistas / medicina</td></tr>
+  <tr><td>Cocinar rico y equilibrado</td><td>Consejo nutricional personalizado (es de dietista)</td></tr>
+</table>
+<div class="callout ok">
+  <span class="lbl">Regla de oro del nicho</span>
+  <p>Posiciónate como blog de <b>cocina saludable</b> (recetas, técnicas, utensilios), <b>no</b> de
+  <b>nutrición/dietética</b> (salud, tratamientos, adelgazar). Con eso + <b>fotos propias</b>, es aprobable y
+  limpio, y conservas la mejor monetización que las recetas genéricas.</p>
+</div>
+
+<!-- 3 PRESENTACION WEB -->
+<div class="part-head">
+  <div class="part-kicker">Parte 2</div>
+  <h2>Presentación de la web (identidad y marca)</h2>
+</div>
+<p class="lead">Como en todo proyecto que aprueba fácil: primero la identidad (quién está detrás y por qué),
+luego el contenido. Esto construye el E-E-A-T que dispara la aprobación.</p>
+<table>
+  <tr><th>Elemento</th><th>Definición</th></tr>
+  <tr><td>Nombre de trabajo</td><td><b>CocinaFit</b> (recomendado; alternativas: SanoyRico, ModoProteína) — verificar disponibilidad de dominio y redes</td></tr>
+  <tr><td>Promesa (tagline)</td><td>"Come rico, ligero y con proteína — sin complicarte"</td></tr>
+  <tr><td>Posicionamiento</td><td>Cocina saludable, proteica y baja en calorías, fácil y para el día a día</td></tr>
+  <tr><td>Tono de voz</td><td>Cercano, práctico, motivador; comida real y apetecible (no "dieta triste")</td></tr>
+  <tr><td>Público</td><td>Personas 22-45 que quieren comer sano sin renunciar al sabor; gente que entrena, meal preppers, ocupados</td></tr>
+  <tr><td>Redes a reservar</td><td>@cocinafit (o el nombre elegido) en Instagram, Pinterest, TikTok, YouTube</td></tr>
+</table>
+<h3>Modelo de página "Sobre Nosotros" (rellenar con persona real)</h3>
+<div class="callout">
+  <span class="lbl">Estructura recomendada</span>
+  <p><b>Quién escribe.</b> Presentación con nombre y foto reales de quien cocina. <b>Por qué.</b> Tu historia
+  ("empecé a cocinar sano para comer bien sin aburrirme / sin renunciar al sabor…"). <b>Cómo trabajamos el
+  contenido.</b> Recetas probadas en casa, fotos propias, valores nutricionales aproximados como referencia.
+  <b>Nota importante:</b> incluye un aviso tipo "el contenido es informativo y culinario, no sustituye el
+  consejo de un profesional de la nutrición" → refuerza confianza y te separa del YMYL.</p>
+</div>
+<div class="callout warn">
+  <span class="lbl">Honestidad</span>
+  <p>El E-E-A-T necesita una <b>persona real</b> (tú o un colaborador). No inventes una identidad ficticia. Si
+  algún día un dietista-nutricionista revisa los valores nutricionales, súmalo: refuerza mucho la autoridad
+  (opcional con este enfoque de cocina).</p>
+</div>
+<p><b>Páginas legales 10/10</b> (igual que en el Plan de bodas): Sobre Nosotros, Contacto, Aviso Legal,
+Política de Privacidad (con mención expresa de AdSense), Política de Cookies + CMP, Aviso de afiliación.</p>
+
+<!-- 4 APROBACION -->
+<div class="part-head">
+  <div class="part-kicker">Parte 3</div>
+  <h2>Estrategia de aprobación AdSense</h2>
+</div>
+<ol class="check">
+  <li>Framing de cocina (no dieta) en marca, textos y categorías</li>
+  <li>Identidad real + 5 páginas legales + CMP de cookies</li>
+  <li>WordPress + tema ligero + HTTPS + hosting rápido + Core Web Vitals en verde</li>
+  <li>20-25 artículos publicados con <b>FOTOS PROPIAS</b> (mezcla de categorías potentes)</li>
+  <li>3-4 pilares profundos (guías cornerstone) entre ellos</li>
+  <li>Valores nutricionales como dato informativo; sin claims de salud/adelgazamiento</li>
+  <li>Alta en Search Console + sitemap; comprobar indexación</li>
+  <li>Solicitar AdSense con el sitio ya maduro y con algo de tráfico</li>
+  <li>Afiliación moderada al principio (no llenar de enlaces una web nueva)</li>
+</ol>
+
+<!-- 5 KEYWORDS -->
+<div class="part-head">
+  <div class="part-kicker">Parte 4</div>
+  <h2>Keywords por prioridad</h2>
+</div>
+<p class="lead">Clusters de keywords ordenados por <b>potencia SEO</b> = volumen × tendencia × intención ×
+"ganabilidad". De aquí salen las categorías (Parte 5) y los títulos (Parte 6).</p>
+
+<h3>🔥 Tier 1 — Máxima potencia (volumen alto + tendencia fuerte)</h3>
+<table>
+  <tr><th>Cluster de keyword</th><th>Intención</th><th>Por qué es potente</th></tr>
+  <tr><td>recetas air fryer / freidora de aire (saludables)</td><td>Informacional/receta</td><td>Tendencia explosiva; todo el mundo tiene una y busca qué cocinar</td></tr>
+  <tr><td>tortitas de avena / desayunos proteicos</td><td>Receta</td><td>Volumen enorme y recurrente; "sin huevo" también sube</td></tr>
+  <tr><td>cenas ligeras / bajas en calorías</td><td>Receta</td><td>Búsqueda diaria universal ("qué ceno hoy")</td></tr>
+  <tr><td>postres saludables / fit / sin azúcar</td><td>Receta</td><td>Rey de Pinterest; altísima compartibilidad</td></tr>
+  <tr><td>recetas con pollo (saludables/proteicas)</td><td>Receta</td><td>El ingrediente más buscado del nicho</td></tr>
+</table>
+
+<h3>💪 Tier 2 — Alta prioridad (tendencia + buena monetización)</h3>
+<table>
+  <tr><th>Cluster de keyword</th><th>Intención</th><th>Por qué</th></tr>
+  <tr><td>meal prep / tuppers / batch cooking proteico</td><td>Informacional/receta</td><td>En auge; público organizado que compra táperes</td></tr>
+  <tr><td>overnight oats / avena de la noche a la mañana</td><td>Receta</td><td>Tendencia fuerte, muy visual</td></tr>
+  <tr><td>recetas altas en proteína (por ingrediente)</td><td>Receta</td><td>Requesón, skyr, huevo, atún, tofu, legumbres</td></tr>
+  <tr><td>batidos / bebidas proteicas caseras</td><td>Receta</td><td>Búsqueda constante; proffee y smoothies de moda</td></tr>
+  <tr><td>brownie / helado / mug cake proteico</td><td>Receta</td><td>Postres fit concretos que explotan en Pinterest</td></tr>
+</table>
+
+<h3>🧭 Tier 3 — Soporte y autoridad (informacional + afiliación)</h3>
+<table>
+  <tr><th>Cluster de keyword</th><th>Intención</th><th>Rol</th></tr>
+  <tr><td>cómo calcular proteínas / macros de una receta</td><td>Informacional</td><td>Autoridad temática (pilar)</td></tr>
+  <tr><td>sustituciones saludables / endulzantes / despensa fit</td><td>Informacional</td><td>Guías básicas que dan confianza y E-E-A-T</td></tr>
+  <tr><td>mejor air fryer / robot / táperes / báscula</td><td>Comercial</td><td>Afiliación (el dinero de verdad)</td></tr>
+</table>
+<div class="callout">
+  <span class="lbl">Regla anti-canibalización (de los Ajustes v2 de bodas)</span>
+  <p><b>Una intención = un artículo.</b> "tortitas de avena", "tortitas fit", "pancakes proteicas" son la misma
+  búsqueda → <b>un solo artículo</b> que las agrupe, no varios compitiendo entre sí.</p>
+</div>
+
+<!-- 6 CATEGORIAS -->
+<div class="part-head">
+  <div class="part-kicker">Parte 5</div>
+  <h2>Las 9 categorías de la web</h2>
+</div>
+<p class="lead">Silos de intención distinta, derivados de los clusters de keywords. El tema transversal
+("proteico / bajo en calorías") es el ADN del sitio, no una categoría.</p>
+<table>
+  <tr><th>#</th><th>Categoría</th><th>Intención / rol</th><th>Prioridad</th></tr>
+  <tr><td>1</td><td>Recetas con Air Fryer</td><td>El gran imán de tráfico y tendencia</td><td>🔥 Tier 1</td></tr>
+  <tr><td>2</td><td>Desayunos y meriendas</td><td>Avena, tortitas, overnight oats, proteico</td><td>🔥 Tier 1</td></tr>
+  <tr><td>3</td><td>Comidas y cenas ligeras</td><td>"Qué como / qué ceno" bajo en calorías</td><td>🔥 Tier 1</td></tr>
+  <tr><td>4</td><td>Postres y dulces saludables</td><td>Rey de Pinterest; sin azúcar / proteico</td><td>🔥 Tier 1</td></tr>
+  <tr><td>5</td><td>Meal prep y tuppers</td><td>Organización semanal; público que compra</td><td>💪 Tier 2</td></tr>
+  <tr><td>6</td><td>Recetas por ingrediente proteico</td><td>Pollo, huevo, avena, requesón, tofu, atún…</td><td>💪 Tier 2</td></tr>
+  <tr><td>7</td><td>Bebidas y batidos proteicos</td><td>Smoothies, proffee, post-entreno</td><td>💪 Tier 2</td></tr>
+  <tr><td>8</td><td>Guías y básicos de cocina saludable</td><td>Autoridad (macros, sustituciones, despensa)</td><td>🧭 Tier 3</td></tr>
+  <tr><td>9</td><td>Utensilios y productos</td><td>Afiliación (air fryer, robots, táperes)</td><td>🧭 Tier 3</td></tr>
+</table>
+
+<!-- 7 TITULOS -->
+<div class="part-head">
+  <div class="part-kicker">Parte 6</div>
+  <h2>+100 títulos de artículos, priorizados</h2>
+</div>
+<p class="lead">Organizados por categoría y ordenados por potencia SEO. <span class="hot">HOT</span> = candidatos a
+publicar primero y a destacar en la landing. Cada categoría abre con su <b>guía pilar</b>.</p>
+
+<div class="cat">
+  <div class="h"><span class="name">1 · Recetas con Air Fryer</span><span class="tier tierA">Tier 1 · Tendencia</span></div>
+  <div class="pillar"><b>Pilar</b> · Recetas saludables en air fryer: la guía definitiva (tiempos y temperaturas)</div>
+  <ol>
+    <li>Pechuga de pollo jugosa en air fryer (alta en proteína) <span class="hot">HOT</span></li>
+    <li>Salmón en air fryer en 10 minutos <span class="hot">HOT</span></li>
+    <li>Verduras crujientes en air fryer sin aceite <span class="hot">HOT</span></li>
+    <li>Boniato y patata light en air fryer</li>
+    <li>Muslos de pollo crujientes en air fryer</li>
+    <li>Brochetas de pollo en air fryer</li>
+    <li>Tofu crujiente en air fryer</li>
+    <li>Garbanzos crujientes en air fryer (snack proteico)</li>
+    <li>Merluza y pescado blanco en air fryer</li>
+    <li>Huevos en air fryer: trucos y tiempos</li>
+    <li>Chips de verduras en air fryer</li>
+    <li>Postres saludables en air fryer</li>
+    <li>Qué NO cocinar en air fryer: errores comunes</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">2 · Desayunos y meriendas saludables</span><span class="tier tierA">Tier 1 · Volumen</span></div>
+  <div class="pillar"><b>Pilar</b> · Desayunos proteicos: guía + 20 ideas fáciles</div>
+  <ol>
+    <li>Tortitas de avena y plátano proteicas <span class="hot">HOT</span></li>
+    <li>Overnight oats (avena de la noche a la mañana): 6 recetas <span class="hot">HOT</span></li>
+    <li>Desayunos proteicos sin huevo <span class="hot">HOT</span></li>
+    <li>Tortitas proteicas de requesón</li>
+    <li>Porridge de avena proteico</li>
+    <li>Tostadas saludables altas en proteína</li>
+    <li>Pudding de chía proteico</li>
+    <li>10 desayunos con yogur griego</li>
+    <li>Gofres fit de avena</li>
+    <li>Mug cake de avena en microondas</li>
+    <li>Desayunos proteicos para llevar al trabajo</li>
+    <li>Crepes proteicas dulces y saladas</li>
+    <li>Bizcocho de avena saludable</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">3 · Comidas y cenas ligeras</span><span class="tier tierA">Tier 1 · Volumen diario</span></div>
+  <div class="pillar"><b>Pilar</b> · Cenas ligeras y bajas en calorías: 30 ideas rápidas</div>
+  <ol>
+    <li>Cenas altas en proteína y bajas en calorías <span class="hot">HOT</span></li>
+    <li>Wraps de pollo altos en proteína <span class="hot">HOT</span></li>
+    <li>Cenas saludables en 15 minutos <span class="hot">HOT</span></li>
+    <li>Ensaladas completas y saciantes</li>
+    <li>Bowls proteicos (poke bowl casero)</li>
+    <li>Cremas de verduras ligeras</li>
+    <li>Tortilla de verduras y claras</li>
+    <li>Pizza fit de base proteica</li>
+    <li>Hamburguesas caseras saludables</li>
+    <li>Salteados de verduras con pollo o tofu</li>
+    <li>Pasta integral proteica ligera</li>
+    <li>Pollo al curry light</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">4 · Postres y dulces saludables</span><span class="tier tierA">Tier 1 · Pinterest</span></div>
+  <div class="pillar"><b>Pilar</b> · Postres saludables: 25 recetas sin azúcar añadido</div>
+  <ol>
+    <li>Brownie proteico saludable <span class="hot">HOT</span></li>
+    <li>Helado proteico casero (nice cream) <span class="hot">HOT</span></li>
+    <li>Mug cake proteico en microondas <span class="hot">HOT</span></li>
+    <li>Galletas de avena fit</li>
+    <li>Cheesecake proteica de requesón</li>
+    <li>Cookies proteicas de plátano</li>
+    <li>Mousse de chocolate proteica</li>
+    <li>Natillas / flan proteico</li>
+    <li>Tarta de manzana sin azúcar</li>
+    <li>Donuts fit al horno</li>
+    <li>Bombones de dátil y chocolate</li>
+    <li>Coulant proteico</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">5 · Meal prep y tuppers</span><span class="tier tierB">Tier 2 · Auge</span></div>
+  <div class="pillar"><b>Pilar</b> · Meal prep: cómo organizar tus comidas de la semana</div>
+  <ol>
+    <li>Tuppers altos en proteína para el trabajo <span class="hot">HOT</span></li>
+    <li>Batch cooking saludable para principiantes <span class="hot">HOT</span></li>
+    <li>Menú semanal saludable con lista de la compra</li>
+    <li>Comidas para llevar que aguantan bien</li>
+    <li>Prep de proteína para toda la semana</li>
+    <li>Táperes para congelar saludables</li>
+    <li>Meal prep vegetariano proteico</li>
+    <li>Meal prep de desayunos</li>
+    <li>Cómo conservar y recalentar sin que sepa mal</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">6 · Recetas por ingrediente proteico</span><span class="tier tierB">Tier 2 · Autoridad</span></div>
+  <div class="pillar"><b>Pilar</b> · Ingredientes proteicos: cuáles usar y cómo cocinarlos</div>
+  <ol>
+    <li>Recetas con pollo saludables y variadas <span class="hot">HOT</span></li>
+    <li>Recetas con avena dulces y saladas <span class="hot">HOT</span></li>
+    <li>Recetas con requesón (de moda) <span class="hot">HOT</span></li>
+    <li>Recetas con huevo altas en proteína</li>
+    <li>Recetas con skyr / yogur griego</li>
+    <li>Recetas con atún ligeras</li>
+    <li>Recetas con tofu para principiantes</li>
+    <li>Recetas con legumbres proteicas</li>
+    <li>Recetas con claras de huevo</li>
+    <li>Recetas con proteína en polvo (más allá del batido)</li>
+    <li>Recetas con garbanzos</li>
+    <li>Recetas con salmón</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">7 · Bebidas y batidos proteicos</span><span class="tier tierB">Tier 2</span></div>
+  <div class="pillar"><b>Pilar</b> · Batidos proteicos caseros: recetas y cuándo tomarlos</div>
+  <ol>
+    <li>Batidos proteicos sin proteína en polvo <span class="hot">HOT</span></li>
+    <li>Café proteico (proffee) casero</li>
+    <li>Smoothies verdes proteicos</li>
+    <li>Batido post-entreno casero</li>
+    <li>Chocolate caliente proteico</li>
+    <li>Batidos saciantes para la merienda</li>
+    <li>Bebidas sin azúcar caseras</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">8 · Guías y básicos de cocina saludable</span><span class="tier tierC">Tier 3 · Autoridad</span></div>
+  <div class="pillar"><b>Pilar</b> · Cómo empezar a comer sano sin complicarte</div>
+  <ol>
+    <li>Cómo calcular las proteínas de una receta</li>
+    <li>Sustituciones saludables en repostería</li>
+    <li>Endulzantes saludables: cuál usar en cada receta</li>
+    <li>La despensa fit: básicos imprescindibles</li>
+    <li>Cómo cocinar con poco o nada de aceite</li>
+    <li>Especias para dar sabor sin sumar calorías</li>
+    <li>Cómo hacer las comidas más saciantes</li>
+    <li>Errores al cocinar "sano" que suman calorías</li>
+    <li>Cómo leer las etiquetas de los alimentos</li>
+  </ol>
+</div>
+
+<div class="cat">
+  <div class="h"><span class="name">9 · Utensilios y productos (afiliación)</span><span class="tier tierC">Tier 3 · Monetización</span></div>
+  <div class="pillar"><b>Pilar</b> · Utensilios básicos para una cocina saludable</div>
+  <ol>
+    <li>Mejores freidoras de aire calidad-precio <span class="hot">HOT</span></li>
+    <li>Mejores robots de cocina para cocinar sano</li>
+    <li>Táperes de cristal para meal prep: cuáles comprar</li>
+    <li>Básculas de cocina: guía de compra</li>
+    <li>Sartenes antiadherentes para cocinar sin aceite</li>
+    <li>Batidoras y licuadoras para batidos</li>
+    <li>Moldes y utensilios para repostería fit</li>
+    <li>Básicos de Amazon para empezar a cocinar sano</li>
+  </ol>
+</div>
+
+<div class="callout ok">
+  <span class="lbl">Recuento</span>
+  <p>9 categorías · 9 guías pilar · <b>~102 títulos de artículos</b> priorizados por potencia SEO. Sistema
+  escalable: cada categoría admite continuamente nuevas variantes de cola larga (por ingrediente, momento del
+  día, utensilio o temporada).</p>
+</div>
+
+<!-- 8 SEO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 7</div>
+  <h2>Estrategia SEO de artículos</h2>
+</div>
+<h3>Clusters y enlazado</h3>
+<ul class="clean">
+  <li>Cada categoría = un <b>silo</b> con su guía pilar; los artículos (spokes) enlazan al pilar y entre hermanos.</li>
+  <li><b>Una intención = un artículo</b> (agrupa variantes; evita canibalización).</li>
+  <li>Enlaza entre categorías cuando aporta valor (una receta de air fryer enlaza al pilar de "pollo").</li>
+</ul>
+<h3>On-page (obligatorio en cada receta)</h3>
+<ul class="clean">
+  <li>Keyword en título SEO, H1 y URL; respuesta/receta accesible pronto.</li>
+  <li><b>Schema Recipe</b> (tiempos, raciones, ingredientes, valores nutricionales) → rich snippets.</li>
+  <li><b>Foto propia</b> del plato terminado + fotos de pasos; <code>alt</code> descriptivo.</li>
+  <li>Ficha de valores nutricionales (kcal, proteína) como dato informativo.</li>
+  <li>FAQ (sustituciones, conservación) con schema FAQ.</li>
+  <li>Autor + fecha de publicación y actualización; declaración de afiliación si aplica.</li>
+  <li>Tarjeta de receta imprimible (plugin de recetas de WordPress).</li>
+</ul>
+<h3>Orden de publicación (lo más potente primero)</h3>
+<table>
+  <tr><th>Fase</th><th>Foco</th></tr>
+  <tr><td>Arranque (aprobación)</td><td>2-3 pilares + primeros HOT de Tier 1 (air fryer, tortitas de avena, cenas ligeras, brownie proteico), con fotos propias</td></tr>
+  <tr><td>Tras aprobar</td><td>Completar clusters Tier 1, empezar Tier 2 (meal prep, ingredientes, batidos)</td></tr>
+  <tr><td>Consolidación</td><td>Guías (Tier 3) + artículos de producto (afiliación) + expansión de cola larga</td></tr>
+</table>
+
+<!-- 9 TRAFICO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 8</div>
+  <h2>Estrategia de tráfico</h2>
+</div>
+<h3>Pinterest — el canal rey de las recetas</h3>
+<ul class="clean">
+  <li>Pines verticales por receta con foto propia apetecible + texto ("Brownie proteico · 8 g proteína").</li>
+  <li>Tableros por categoría (air fryer, desayunos, postres fit, meal prep).</li>
+  <li>Vídeos cortos de preparación (también para Reels/TikTok/Shorts).</li>
+</ul>
+<h3>SEO + Google Discover</h3>
+<ul class="clean">
+  <li>Cola larga de recetas concretas; schema Recipe para rich snippets.</li>
+  <li>Contenido visual y de tendencia puede explotar en Discover.</li>
+</ul>
+<h3>Email</h3>
+<ul class="clean">
+  <li>Lead magnet: <b>recetario PDF</b> ("15 desayunos proteicos") o <b>menú semanal descargable</b>.</li>
+  <li>Newsletter con receta de la semana → tráfico recurrente + venta de afiliación/infoproducto.</li>
+</ul>
+
+<div class="footer-note">
+  Plan Completo · Recetas Fit / cocina saludable proteica · Septiembre 2026 · Basado en investigación de
+  tendencias del sector (air fryer, proteico, meal prep, avena) — volúmenes a validar con Keyword Planner y
+  Search Console. Enfoque de cocina, no de dieta/salud (fuera de YMYL). Complemento del Manual de Google AdSense
+  y de la guía del Agente Redactor del repositorio agente-google-adsese.
+</div>
+
+</body>
+</html>
