@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<title>Auditoría de nicho — Jardinería y plantas</title>
+<style>
+  @page{ size:A4; margin:17mm 16mm 18mm 16mm; }
+  @page :first{ margin:0; }
+  *{ box-sizing:border-box; }
+  :root{
+    --ink:#1e2620; --ink2:#3c473e; --muted:#5f6b60; --faint:#8a948b;
+    --green:#2f5e42; --green-soft:#e6efe7; --green-line:#bcd3c2;
+    --ochre:#a9762a; --ochre-soft:#f5ecd9; --ochre-line:#e0c99a;
+    --terra:#a5482f; --terra-soft:#f6e5df;
+    --line:#e0e5e0; --bg:#fff; --panel:#f7f9f7;
+  }
+  html,body{ margin:0; padding:0; }
+  body{ font-family:"Helvetica Neue",Arial,sans-serif; color:var(--ink); font-size:10.5pt; line-height:1.5;
+    -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  h1,h2,h3,h4{ font-family:Georgia,"Times New Roman",serif; line-height:1.15; color:var(--ink); }
+  p{ margin:0 0 8px; color:var(--ink2); }
+  .mono{ font-family:"SF Mono",Consolas,monospace; }
+  code{ background:var(--panel); padding:1px 5px; border-radius:3px; font-family:"SF Mono",Consolas,monospace; font-size:9pt; color:var(--green); }
+
+  .cover{ height:297mm; width:210mm; background:linear-gradient(160deg,#16281e,#22402e 55%,#2f5e42);
+    color:#fff; padding:34mm 24mm; page-break-after:always; display:flex; flex-direction:column;
+    print-color-adjust:exact; -webkit-print-color-adjust:exact; }
+  .cover .kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.3em; text-transform:uppercase; font-size:9pt; color:var(--ochre-line); }
+  .cover h1{ color:#fff; font-size:40pt; line-height:1.04; margin:14px 0 8px; }
+  .cover .rule{ width:64px; height:3px; background:var(--ochre); margin:24px 0; }
+  .cover .sub{ font-size:12.5pt; color:#e2ece4; max-width:122mm; line-height:1.55; }
+  .cover .tag{ display:inline-block; border:1px solid rgba(255,255,255,.35); border-radius:40px; padding:5px 14px;
+    font-family:"SF Mono",Consolas,monospace; font-size:8.5pt; letter-spacing:.12em; text-transform:uppercase; color:#fff; margin:4px 6px 0 0; }
+  .cover .meta{ margin-top:auto; font-size:9.3pt; color:#b9c7bd; font-family:"SF Mono",Consolas,monospace; }
+
+  .part-head{ page-break-before:always; border-top:3px solid var(--ochre); padding-top:10px; margin-top:6px; }
+  .first{ page-break-before:avoid; }
+  .part-kicker{ font-family:"SF Mono",Consolas,monospace; letter-spacing:.24em; text-transform:uppercase; font-size:8.5pt; color:var(--ochre); }
+  h2{ font-size:20pt; margin:6px 0 4px; }
+  h3{ font-size:13.5pt; margin:18px 0 6px; color:var(--green); }
+  h4{ font-size:11pt; margin:12px 0 4px; }
+  .lead{ font-size:11.2pt; color:var(--muted); margin-bottom:6px; }
+
+  table{ width:100%; border-collapse:collapse; margin:10px 0 14px; font-size:9.4pt; }
+  th,td{ text-align:left; padding:7px 9px; border-bottom:1px solid var(--line); vertical-align:top; }
+  th{ background:var(--panel); font-family:"SF Mono",Consolas,monospace; font-size:7.8pt; text-transform:uppercase;
+    letter-spacing:.07em; color:var(--muted); border-bottom:1.5px solid var(--green-line); }
+  tr{ page-break-inside:avoid; }
+  td.tnum{ font-family:"SF Mono",Consolas,monospace; }
+  .score td:last-child{ font-family:"SF Mono",Consolas,monospace; font-weight:700; }
+
+  .callout{ border:1px solid var(--line); border-left:4px solid var(--ochre); background:var(--ochre-soft);
+    padding:11px 14px; border-radius:5px; margin:12px 0; page-break-inside:avoid; }
+  .callout.warn{ border-left-color:var(--terra); background:var(--terra-soft); }
+  .callout.ok{ border-left-color:var(--green); background:var(--green-soft); }
+  .callout .lbl{ font-family:"SF Mono",Consolas,monospace; font-size:8pt; letter-spacing:.13em; text-transform:uppercase;
+    color:var(--ochre); font-weight:700; display:block; margin-bottom:3px; }
+  .callout.warn .lbl{ color:var(--terra); } .callout.ok .lbl{ color:var(--green); }
+  .callout p:last-child{ margin-bottom:0; }
+  ul.clean{ margin:6px 0; padding-left:18px; } ul.clean li{ padding:2px 0; color:var(--ink2); }
+  ol.check{ padding-left:0; } .check li{ list-style:none; padding:3px 0 3px 22px; position:relative; color:var(--ink2); }
+  .check li::before{ content:"☐"; position:absolute; left:0; color:var(--ochre); font-size:11pt; }
+
+  .grid2{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+  .stat{ border:1px solid var(--line); border-radius:6px; padding:10px 12px; background:var(--panel); }
+  .stat .n{ font-family:Georgia,serif; font-size:17pt; color:var(--green); }
+  .stat .l{ font-size:8.6pt; color:var(--muted); }
+  .cat-card{ border:1px solid var(--line); border-radius:8px; padding:11px 14px; margin:10px 0; page-break-inside:avoid; }
+  .cat-card .catname{ font-family:Georgia,serif; font-size:12.5pt; color:var(--green); font-weight:700; }
+  .cat-card ul{ margin:6px 0 0; padding-left:18px; } .cat-card li{ font-size:9.6pt; padding:1.5px 0; color:var(--ink2); }
+  .footer-note{ margin-top:24px; padding-top:10px; border-top:1px solid var(--line); font-size:8.3pt; color:var(--faint); }
+  .em{ color:var(--green); font-weight:700; }
+</style>
+</head>
+<body>
+
+<div class="cover">
+  <div class="kicker">Auditoría de nicho · Seguro para aprobación AdSense</div>
+  <h1>Jardinería,<br>plantas de interior<br>y huerto urbano</h1>
+  <div class="rule"></div>
+  <p class="sub">El nicho más a prueba de rechazo para tu cuenta de AdSense: family-safe, sin zonas grises de
+  políticas, con originalidad garantizada por tus propias fotos y un motor de tráfico evergreen (Pinterest +
+  calendario de siembra). Auditoría completa con datos de España.</p>
+  <div>
+    <span class="tag">Mercado España</span>
+    <span class="tag">No-YMYL</span>
+    <span class="tag">Aprobación 9,5/10</span>
+  </div>
+  <div class="meta">Auditoría de nicho · Septiembre 2026 · Complemento del Manual de AdSense y de la auditoría de Bodas<br>
+  Repositorio agente-google-adsese</div>
+</div>
+
+<!-- 1 SCORECARD -->
+<div class="part-head first">
+  <div class="part-kicker">Veredicto</div>
+  <h2>Scorecard ejecutivo</h2>
+</div>
+<p class="lead">Para tu objetivo prioritario —<b>que Google apruebe la cuenta casi con seguridad</b>— este nicho
+puntúa incluso <b>más alto que bodas</b>. Es de los más "limpios" que existen.</p>
+<table class="score">
+  <tr><th>Criterio</th><th>Comentario</th><th>Nota</th></tr>
+  <tr><td>Facilidad de aprobación AdSense</td><td>No-YMYL, family-safe, originalidad trivial con fotos propias</td><td>9,5/10</td></tr>
+  <tr><td>Cumplimiento de políticas</td><td>Cero zonas grises; ni siquiera el alcohol de bodas</td><td>10/10</td></tr>
+  <tr><td>Facilidad de crear contenido único</td><td>Tus plantas, tu balcón, tu huerto = contenido irrepetible</td><td>10/10</td></tr>
+  <tr><td>E-E-A-T sin credenciales</td><td>Tu experiencia real basta; no necesitas títulos</td><td>9/10</td></tr>
+  <tr><td>Potencial de tráfico (SEO + Pinterest)</td><td>Nicho muy visual + demanda evergreen y estacional</td><td>9/10</td></tr>
+  <tr><td>Tendencia de mercado</td><td>En crecimiento en España (jardín urbano, smart garden, sostenibilidad)</td><td>8/10</td></tr>
+  <tr><td>RPM / valor publicitario</td><td>Medio-bajo (hobby); se compensa con afiliación</td><td>6/10</td></tr>
+  <tr><td>Potencial de afiliación</td><td>Amazon (macetas, sustratos, semillas, kits, smart garden)</td><td>8/10</td></tr>
+  <tr><td>Competencia SEO</td><td>Media; menos saturado que recetas</td><td>7/10</td></tr>
+  <tr><td><b>NOTA GLOBAL</b></td><td><b>Ideal para aprobar rápido y seguro, y construir un activo real</b></td><td><b>8,5/10</b></td></tr>
+</table>
+
+<div class="callout ok">
+  <span class="lbl">La clave que lo hace "seguro 100%"</span>
+  <p>El rechazo nº1 de AdSense es <b>"low value content"</b> (contenido sin valor/duplicado). En jardinería,
+  <b>cada artículo lleva tus propias fotos</b> (tu monstera, tu huerto en el balcón, tu proceso de trasplante).
+  Eso es <b>imposible de "raspar" de otra web</b> → Google no puede acusarte de contenido duplicado. Es la vía
+  más directa a una aprobación sin sustos.</p>
+</div>
+
+<!-- 2 POR QUE SEGURO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 1</div>
+  <h2>Por qué es (casi) imposible que te rechacen</h2>
+</div>
+<h3>Auditoría de cumplimiento de políticas</h3>
+<table>
+  <tr><th>Política de AdSense</th><th>¿Jardinería la cumple?</th></tr>
+  <tr><td>No contenido YMYL sensible (dinero/salud/legal)</td><td>✅ Total — es un hobby</td></tr>
+  <tr><td>No contenido adulto / violento / peligroso</td><td>✅ Imposible que aplique</td></tr>
+  <tr><td>No contenido restringido (alcohol, tabaco, juego…)</td><td>✅ Ninguno — ni siquiera el alcohol de bodas</td></tr>
+  <tr><td>No copyright infringido</td><td>✅ Fotos propias de tus plantas → cero riesgo</td></tr>
+  <tr><td>Contenido original con valor</td><td>✅✅ Su mayor fortaleza (fotos + experiencia)</td></tr>
+  <tr><td>E-E-A-T</td><td>✅ Tu experiencia real como aficionado basta</td></tr>
+</table>
+<div class="callout">
+  <span class="lbl">Comparado con bodas</span>
+  <p>Bodas ya era muy seguro, pero rozaba dos cosas: el <b>alcohol</b> (contenido restringido) y el
+  <b>copyright de imágenes</b> (fotos de vestidos, fincas…). Jardinería <b>no roza ninguna</b>: no hay temas
+  restringidos y tus fotos son de tus propias plantas. Por eso su nota de cumplimiento es un <b>10/10</b>.</p>
+</div>
+
+<h3>Un único matiz a vigilar</h3>
+<p>Si algún día tratas <b>plantas medicinales o comestibles con "propiedades para la salud"</b>, entrarías en
+terreno YMYL. Solución sencilla: mantente en <b>cultivo, cuidado y decoración</b> ("cómo cuidar la albahaca"),
+no en salud ("la albahaca cura X"). Con eso, cero problemas.</p>
+
+<!-- 3 MERCADO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 2</div>
+  <h2>Análisis de mercado (España)</h2>
+</div>
+<div class="grid2">
+  <div class="stat"><div class="n">+20.000</div><div class="l">huertos urbanos repartidos por España (tendencia al alza)</div></div>
+  <div class="stat"><div class="n">Evergreen</div><div class="l">demanda todo el año + picos estacionales (primavera)</div></div>
+  <div class="stat"><div class="n">Smart garden</div><div class="l">jardín inteligente y sostenibilidad = tendencias 2025-2026</div></div>
+  <div class="stat"><div class="n">Visual</div><div class="l">nicho idóneo para Pinterest (buscador visual)</div></div>
+</div>
+<p>El interés por la jardinería urbana, las plantas de interior y el huerto en casa <b>crece de forma sostenida
+en España</b>, impulsado por la vida en ciudad, la conciencia sostenible y el auge del "plant parenting". Es un
+nicho <b>evergreen</b> (se cuida todo el año) con <b>picos estacionales</b> muy predecibles (siembra en
+primavera, cuidados de invierno), lo que da un flujo de contenido inagotable.</p>
+<div class="callout">
+  <span class="lbl">La mina de contenido evergreen</span>
+  <p>El <b>calendario de siembra y cuidados</b> genera contenido perpetuo: "qué sembrar en [mes]", "cuidados de
+  [planta] en invierno", "cuándo trasplantar el [cultivo]". Doce meses × decenas de plantas = <b>cientos de
+  artículos</b> con demanda recurrente año tras año.</p>
+</div>
+
+<!-- 4 RENTABILIDAD -->
+<div class="part-head">
+  <div class="part-kicker">Parte 3</div>
+  <h2>Rentabilidad: dónde está el dinero</h2>
+</div>
+<p class="lead">Honestidad: el RPM de AdSense en jardinería es <b>medio-bajo</b> (nicho hobby, ~2-4 € orientativo).
+El dinero de verdad viene de la <b>afiliación</b>, muy natural en este nicho.</p>
+<table>
+  <tr><th>Fuente</th><th>Potencial</th><th>Por qué</th></tr>
+  <tr><td>AdSense / display</td><td>🟡 Medio-bajo</td><td>Buen "suelo" con tráfico alto; RPM hobby</td></tr>
+  <tr><td>Afiliación Amazon</td><td>🟢 Alto</td><td>Macetas, sustratos, semillas, herramientas, kits de huerto, smart garden, humidificadores, lámparas de cultivo</td></tr>
+  <tr><td>Afiliación tiendas nicho / viveros online</td><td>🟢 Alto</td><td>Comisiones mejores que Amazon en tiendas especializadas</td></tr>
+  <tr><td>Infoproductos</td><td>🟢 Alto</td><td>Calendario de siembra premium, curso "huerto en el balcón", planificador imprimible</td></tr>
+  <tr><td>Contenido patrocinado</td><td>🟡 Medio</td><td>Marcas de jardinería, viveros, herramientas</td></tr>
+</table>
+<div class="callout ok">
+  <span class="lbl">La jugada rentable</span>
+  <p>El contenido de <b>cuidados</b> ("cómo revivir un potos") trae tráfico masivo y alimenta AdSense; el
+  contenido de <b>producto</b> ("mejores macetas autorriego", "kits de huerto urbano", "las 7 mejores lámparas
+  de cultivo") monetiza con <b>afiliación</b>. Amazon paga 1-10% según categoría — y en jardinería la gente
+  compra <b>constantemente</b> (macetas, tierra, semillas cada temporada).</p>
+</div>
+
+<!-- 5 COMPETENCIA -->
+<div class="part-head">
+  <div class="part-kicker">Parte 4</div>
+  <h2>Competencia y hueco real</h2>
+</div>
+<p>La competencia es <b>media</b> — bastante más asumible que recetas (saturadísimo) o bodas (portales gigantes
+tipo Bodas.net). Hay blogs establecidos y algunas tiendas/viveros con blog, pero <b>ningún monopolio</b>
+comparable a Bodas.net. Hay hueco de sobra para un blog con ángulo y fotos propias.</p>
+<h3>Dónde ganar (el hueco)</h3>
+<ul class="clean">
+  <li><b>Cuidados específicos por planta</b> (cola larga): "por qué se ponen amarillas las hojas de la monstera".</li>
+  <li><b>Solución de problemas</b>: "cómo eliminar la mosca blanca de forma natural", "mi orquídea no florece".</li>
+  <li><b>Huerto urbano en poco espacio</b>: balcón, terraza, interior — el ángulo de ciudad.</li>
+  <li><b>Plantas para principiantes</b> y "plantas que no se mueren" (público enorme y menos experto).</li>
+  <li><b>Comparativas de producto</b> con afiliación (macetas, sustratos, smart garden).</li>
+</ul>
+
+<!-- 6 ANGULO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 5</div>
+  <h2>El ángulo recomendado + nombres de dominio</h2>
+</div>
+<p class="lead">Como en bodas, no hagas "una web de jardinería" genérica. Elige un ángulo que te dé autoridad
+rápida y encaje con el público urbano (el que más crece).</p>
+<table>
+  <tr><th>Ángulo</th><th>Por qué funciona</th></tr>
+  <tr><td>🥇 <b>Plantas de interior para principiantes</b></td><td>Público enorme y poco experto, muy visual (Pinterest), afiliación clara (macetas, sustrato)</td></tr>
+  <tr><td>🥈 <b>Huerto urbano (balcón/terraza)</b></td><td>Tendencia al alza, afiliación de kits/semillas, contenido estacional inagotable</td></tr>
+  <tr><td>🥉 <b>Jardinería fácil / "plantas que no se mueren"</b></td><td>Enfoque anti-frustración, muy compartible</td></tr>
+</table>
+<h4>Ideas de dominio (verificar disponibilidad)</h4>
+<p class="mono" style="font-size:9.4pt;color:var(--ink2)">verdeencasa.com · mibalconverde.com · plantasparatorpes.com ·
+hojaycielo.com · elrincondelverde.es · huertoenelbalcon.com · plantasdeinterior.blog · verdefacil.es · miplantayyo.com</p>
+
+<!-- 7 TRAFICO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 6</div>
+  <h2>Estrategia de tráfico</h2>
+</div>
+<h3>Pinterest — el canal ideal del nicho</h3>
+<p>La jardinería es <b>contenido perfecto para Pinterest</b> (buscador visual): fotos de plantas, "antes y
+después", infografías de cuidados. Tráfico evergreen que compone con el tiempo.</p>
+<ul class="clean">
+  <li>Pines verticales por artículo con foto propia + texto ("5 plantas que sobreviven a todo").</li>
+  <li>Tableros por tema: plantas de interior, huerto urbano, cuidados, decoración con plantas.</li>
+  <li>Infografías de cuidados (riego/luz por planta) = muy guardadas.</li>
+</ul>
+<h3>SEO — cola larga de cuidados</h3>
+<ul class="clean">
+  <li>Ataca "cómo cuidar [planta]", "por qué [problema]", "cuándo sembrar [cultivo]".</li>
+  <li>Clusters por planta (pilar "guía de la monstera" + spokes de riego, luz, plagas, reproducción).</li>
+</ul>
+<h3>Email + estacionalidad</h3>
+<ul class="clean">
+  <li>Lead magnet: <b>calendario de siembra descargable</b> (imán perfecto para este público).</li>
+  <li>Newsletter estacional: "qué hacer en tu huerto este mes" → tráfico recurrente.</li>
+</ul>
+
+<!-- 8 ARQUITECTURA -->
+<div class="part-head">
+  <div class="part-kicker">Parte 7</div>
+  <h2>Arquitectura de contenido (categorías)</h2>
+</div>
+<p class="lead">Estructura en silos con intención distinta (aplicando lo aprendido en los Ajustes v2: una
+intención = un artículo).</p>
+
+<div class="cat-card"><div class="catname">1 · Plantas de interior (por planta)</div>
+  <ul><li>Guía de la monstera / potos / ficus / suculentas / orquídeas (pilares)</li>
+  <li>Por qué se ponen amarillas las hojas · cada cuánto regar · cuánta luz necesita · cómo reproducir</li></ul></div>
+<div class="cat-card"><div class="catname">2 · Huerto urbano</div>
+  <ul><li>Cómo empezar un huerto en el balcón · qué sembrar cada mes · huerto de interior</li>
+  <li>Cultivo de tomate/lechuga/aromáticas en maceta · riego y sustrato</li></ul></div>
+<div class="cat-card"><div class="catname">3 · Cuidados y problemas (solución)</div>
+  <ul><li>Plagas comunes y remedios naturales · exceso/falta de riego · trasplante paso a paso</li></ul></div>
+<div class="cat-card"><div class="catname">4 · Plantas para principiantes</div>
+  <ul><li>Plantas que no se mueren · plantas para poca luz · para mascotas (no tóxicas)</li></ul></div>
+<div class="cat-card"><div class="catname">5 · Decoración con plantas</div>
+  <ul><li>Ideas para decorar con plantas · jardines verticales · plantas por estancia (Pinterest)</li></ul></div>
+<div class="cat-card"><div class="catname">6 · Productos y comparativas (afiliación)</div>
+  <ul><li>Mejores macetas autorriego · sustratos · kits de huerto · lámparas de cultivo · smart garden</li></ul></div>
+
+<!-- 9 RIESGOS + VEREDICTO -->
+<div class="part-head">
+  <div class="part-kicker">Parte 8</div>
+  <h2>Riesgos, alternativas y veredicto</h2>
+</div>
+<table>
+  <tr><th>Riesgo</th><th>Nivel</th><th>Mitigación</th></tr>
+  <tr><td>RPM medio-bajo de AdSense</td><td>🟡</td><td>Afiliación + infoproducto desde el inicio</td></tr>
+  <tr><td>Estacionalidad (picos en primavera)</td><td>🟡</td><td>Contenido de interior/cuidados se busca todo el año</td></tr>
+  <tr><td>Deriva a "salud" con plantas medicinales</td><td>🟡</td><td>Quedarse en cultivo/cuidado, no en propiedades curativas</td></tr>
+  <tr><td>Fotos propias requieren esfuerzo</td><td>🟢</td><td>Es también tu mayor ventaja (originalidad = aprobación)</td></tr>
+</table>
+
+<h3>Comparación con las otras alternativas seguras</h3>
+<table>
+  <tr><th>Nicho</th><th>Aprobación</th><th>Tráfico</th><th>RPM</th><th>Competencia</th><th>Veredicto</th></tr>
+  <tr><td><b>Jardinería / plantas</b></td><td>🟢 9,5</td><td>🟢 Alto</td><td>🟡 Medio-bajo</td><td>🟢 Media</td><td><b>El más equilibrado y seguro</b></td></tr>
+  <tr><td>Recetas / cocina</td><td>🟢 9 (con fotos propias)</td><td>🟢 Altísimo</td><td>🔴 Bajo (1-2 €)</td><td>🔴 Saturado</td><td>Mucho tráfico, poca pasta y mucha pelea</td></tr>
+  <tr><td>Decoración / organización hogar</td><td>🟢 9</td><td>🟢 Alto</td><td>🟡 Medio</td><td>🟡 Media-alta</td><td>Gran afiliación (Amazon), algo más competido</td></tr>
+  <tr><td>Manualidades / DIY</td><td>🟢 9,5</td><td>🟡 Medio</td><td>🟠 Bajo-medio</td><td>🟢 Media</td><td>Muy seguro y visual; menos volumen</td></tr>
+</table>
+
+<div class="callout ok">
+  <span class="lbl">Veredicto final</span>
+  <p><b>Jardinería / plantas de interior / huerto urbano es tu apuesta "segura 100%".</b> Aprobación casi
+  garantizada (fotos propias = originalidad imposible de falsear, cero políticas grises), tráfico evergreen con
+  Pinterest como autopista, y monetización real vía afiliación. Es incluso más a prueba de rechazo que bodas.
+  Si quieres máximo tráfico asumiendo más competencia y menos RPM, recetas; si priorizas afiliación de mayor
+  ticket, decoración del hogar. Pero para <b>aprobar rápido y construir un activo sólido y limpio</b>, este es el nicho.</p>
+</div>
+
+<h3>Checklist de arranque</h3>
+<ol class="check">
+  <li>Elegir ángulo (plantas de interior para principiantes / huerto urbano) y dominio</li>
+  <li>WordPress + tema ligero + HTTPS + hosting rápido</li>
+  <li>Identidad "Sobre Nosotros" con persona real + 5 páginas legales + CMP (como en el Plan Completo)</li>
+  <li>20-25 artículos con FOTOS PROPIAS (mezcla cuidados + principiantes + producto)</li>
+  <li>3-4 pilares por planta (guías cornerstone)</li>
+  <li>Lead magnet: calendario de siembra descargable</li>
+  <li>Pinterest de empresa con pines verticales + infografías de cuidados</li>
+  <li>Alta en Search Console; solicitar AdSense con el sitio ya maduro</li>
+  <li>Afiliación Amazon + tiendas nicho integrada en el contenido de producto (declarada)</li>
+</ol>
+
+<div class="footer-note">
+  Auditoría de nicho "Jardinería y plantas" · organizatuboda.blog / portfolio · Septiembre 2026 · Datos de
+  mercado del sector jardinería/huerto urbano en España (tendencias 2024-2026) y referencias de monetización
+  del sector. RPM orientativo; validar con datos reales. Complemento del Manual de Google AdSense y de la
+  auditoría de Bodas del repositorio agente-google-adsese.
+</div>
+
+</body>
+</html>
